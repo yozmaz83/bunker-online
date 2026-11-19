@@ -1,0 +1,15 @@
+BUNKER — online multiplayer game
+
+Files:
+- server.js — combined website and Socket.IO server
+- package.json — dependencies and start command
+
+Run locally:
+1. Install Node.js 18 or newer.
+2. Open terminal in this folder.
+3. Run: npm install
+4. Run: npm start
+5. Open: http://localhost:3000
+
+For Railway deployment, upload this folder to a GitHub repository and deploy that repository.
+The app must listen on the PORT environment variable provided by the hosting platform.
