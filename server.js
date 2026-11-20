@@ -13,7 +13,7 @@ import { readFileSync } from 'node:fs';
 import { randomInt, randomBytes } from 'node:crypto';
 import { Server } from 'socket.io';
 
-const HTML = readFileSync(new URL('./public/index.html', import.meta.url)); // клиент: public/index.html
+const HTML = readFileSync(new URL('./index.html', import.meta.url)); // клиент: index.html
 
 
 // ===== ДАННЫЕ И КАРТЫ =====
