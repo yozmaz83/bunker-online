@@ -112,6 +112,20 @@ const PROF = [
   'Дрочила-профессионал',
   'Трахатель дивана'
 ];
+// ===== КАТЕГОРИИ ПРОФЕССИЙ (классификация вручную, номера — позиции в PROF, начиная с 1) =====
+// PROF-START
+const ADULT_IDX = new Set([41, 42, 43, 44, 66, 67, ...Array.from({ length: 20 }, (_, i) => 71 + i)]); // 18+ (приоритет над «смешными»)
+const FUNNY_IDX = new Set(Array.from({ length: 20 }, (_, i) => 51 + i).filter(n => !ADULT_IDX.has(n)));
+const ADULT_PROFESSIONS = PROF.filter((_, i) => ADULT_IDX.has(i + 1));
+const FUNNY_PROFESSIONS = PROF.filter((_, i) => FUNNY_IDX.has(i + 1));
+const NORMAL_PROFESSIONS = PROF.filter((_, i) => !ADULT_IDX.has(i + 1) && !FUNNY_IDX.has(i + 1));
+// Бросок 0..99: 0–74 обычные (75%), 75–89 смешные (15%), 90–99 18+ (10%). randomInt — CSPRNG Node.js.
+function weightedProfessionPick(roll = randomInt(100)) {
+  const list = roll < 75 ? NORMAL_PROFESSIONS : roll < 90 ? FUNNY_PROFESSIONS : ADULT_PROFESSIONS;
+  return list[randomInt(list.length)];
+}
+// PROF-END
+
 const HEALTH = [
   'Абсолютно здоров',
   'Аллергия на пыль',
@@ -491,7 +505,7 @@ const CATASTROPHES = [
 ];
 
 const genDossier = () => ({
-  profession: pick(PROF),
+  profession: weightedProfessionPick(),
   bio: `${pick(['Мужчина', 'Женщина'])}, ${randomInt(18, 71)} лет`,
   health: pick(HEALTH), hobby: pick(HOBBY), baggage: pick(BAG), fact: pick(FACT)
 });
