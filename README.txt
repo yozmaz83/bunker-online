@@ -1,7 +1,8 @@
 BUNKER — online multiplayer game
 
 Files:
-- server.js — combined website and Socket.IO server
+- server.js — Socket.IO server and game logic (serves public/index.html)
+- public/index.html — the whole client (HTML, CSS, JS)
 - package.json — dependencies and start command
 
 Run locally:
