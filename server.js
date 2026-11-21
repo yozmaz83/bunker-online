@@ -1112,8 +1112,8 @@ const server = http.createServer((req, res) => {
   }
   { // шрифт Ethnocentric: файл лежит в корне проекта (/ethnocentric.otf); запасной вариант — папка fonts/
     const f = decodeURIComponent(req.url.split('?')[0]).replace(/^\/(fonts\/)?/, '').toLowerCase();
-    const FONT_TYPES = { 'ethnocentric.woff2': 'font/woff2', 'ethnocentric.woff': 'font/woff', 'ethnocentric.otf': 'font/otf', 'ethnocentric.ttf': 'font/ttf' };
-    if (FONT_TYPES[f] && /^\/(fonts\/)?ethnocentric\./i.test(req.url)) {
+    const FONT_TYPES = { 'jetbrainsmono.ttf': 'font/ttf', 'ethnocentric.woff2': 'font/woff2', 'ethnocentric.woff': 'font/woff', 'ethnocentric.otf': 'font/otf', 'ethnocentric.ttf': 'font/ttf' };
+    if (FONT_TYPES[f] && /^\/(fonts\/)?(ethnocentric|jetbrainsmono)\./i.test(req.url)) {
       const file = [new URL('./' + f, import.meta.url), new URL('./fonts/' + f, import.meta.url)].find(u => existsSync(u));
       if (file) {
         res.writeHead(200, { 'content-type': FONT_TYPES[f], 'cache-control': 'public, max-age=604800' });

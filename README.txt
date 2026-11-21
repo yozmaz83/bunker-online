@@ -17,5 +17,5 @@ For Railway deployment, upload this folder to a GitHub repository and deploy tha
 The app must listen on the PORT environment variable provided by the hosting platform.
 
 Шрифт и языки:
-- Шрифт интерфейса — Ethnocentric: файл ethnocentric.otf лежит в корне проекта рядом с server.js и отдаётся по адресу /ethnocentric.otf.
-- Языки интерфейса (русский, English, Қазақша, Українська) переключаются в «Настройки» → «Язык».
+- Шрифты встроены прямо в index.html (base64): заголовки — Ethnocentric, остальной текст — JetBrains Mono. Отдельные файлы шрифтов и папка fonts/ не нужны.
+- Язык интерфейса по умолчанию подстраивается под язык устройства/браузера (русский, English, Қазақша, Українська; для остальных — русский). Вручную: «Настройки» → «Язык»; пункт «Авто» возвращает автоопределение.
