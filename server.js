@@ -32,6 +32,11 @@ const AVATARS = new Map(); // id -> { file, type }
       if (m && !AVATARS.has(m[1]) && !/^(logo|favicon|icon)/i.test(m[1])) AVATARS.set(m[1], { file: full, type: AV_EXT[m[2].toLowerCase()] });
     }
   };
+  try { // основной источник: один файл avatars.json { id: base64-jpeg } — не нужно заливать 115 файлов отдельно
+    const pack = JSON.parse(readFileSync(join(AV_ROOT, 'avatars.json'), 'utf8'));
+    for (const [id, b64] of Object.entries(pack)) if (/^[\w-]+$/.test(id)) AVATARS.set(id, { buf: Buffer.from(b64, 'base64'), type: 'image/jpeg' });
+  } catch { /* файла нет — ищем картинки в папках */ }
+  if (!AVATARS.size)
   for (const d of ['public/avatars', 'avatars']) if (existsSync(join(AV_ROOT, d))) walk(join(AV_ROOT, d), 0);
   if (!AVATARS.size) walk(AV_ROOT, 0);
   console.log(`Avatars found: ${AVATARS.size}`);
@@ -884,7 +889,7 @@ const server = http.createServer((req, res) => {
     const a = AVATARS.get(id); // только файлы из белого списка — выйти за пределы проекта нельзя
     if (a) {
       res.writeHead(200, { 'content-type': a.type, 'cache-control': 'public, max-age=86400' });
-      return res.end(readFileSync(a.file));
+      return res.end(a.buf || readFileSync(a.file));
     }
     res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' });
     return res.end('not found');
