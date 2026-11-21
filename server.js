@@ -9,11 +9,17 @@
  Клиентская страница, сервер Socket.IO, данные и игровая логика собраны здесь.
 */
 import http from 'node:http';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { randomInt, randomBytes } from 'node:crypto';
 import { Server } from 'socket.io';
 
 const HTML = readFileSync(new URL('./index.html', import.meta.url)); // клиент: index.html
+
+// Аватарки: public/avatars/<id>.jpg, id = имя файла без расширения. Белый список строится при старте.
+const AV_DIR = new URL('./public/avatars/', import.meta.url);
+const AVATARS = new Set(existsSync(AV_DIR) ? readdirSync(AV_DIR).filter(f => /^[\w-]+\.jpg$/i.test(f)).map(f => f.replace(/\.jpg$/i, '')) : []);
+const AV_INDEX = JSON.stringify([...AVATARS].sort());
+const cleanAvatar = id => { id = String(id || ''); return AVATARS.has(id) ? id : null; };
 
 
 // ===== ДАННЫЕ И КАРТЫ =====
@@ -627,9 +633,9 @@ function cleanSettings(s = {}) {
   };
 }
 
-const newPlayer = name => ({
+const newPlayer = (name, avatar) => ({
   id: randomBytes(4).toString('hex'), sid: null,
-  name: String(name || '').trim().slice(0, 20) || 'Игрок',
+  name: String(name || '').trim().slice(0, 20) || 'Игрок', avatar: cleanAvatar(avatar),
   connected: true, ready: false, alive: true, exiled: false, left: false,
   cards: null, revealed: new Set(), revealedRound: 0, vote: null, lastChat: 0
 });
@@ -816,7 +822,7 @@ function chat(room, pid, text) {
   if (now - p.lastChat < 800) fail('Слишком часто');
   text = String(text || '').trim().slice(0, 300); if (!text) return;
   p.lastChat = now;
-  room.chat.push({ id: pid, name: p.name, text, t: now, out: !p.alive && room.phase !== 'LOBBY' });
+  room.chat.push({ id: pid, name: p.name, av: p.avatar, text, t: now, out: !p.alive && room.phase !== 'LOBBY' });
   room.chat = room.chat.slice(-100); room.notify();
 }
 
@@ -836,7 +842,7 @@ function viewFor(room, pid) {
       canReveal: room.phase === 'REVEAL' && me.alive && me.revealedRound !== room.round && me.revealed.size < KEYS.length
     },
     players: list(room).map(p => ({
-      id: p.id, name: p.name, connected: p.connected, ready: p.ready, alive: p.alive, left: p.left,
+      id: p.id, name: p.name, avatar: p.avatar, connected: p.connected, ready: p.ready, alive: p.alive, left: p.left,
       voted: room.phase === 'VOTE' && !!p.vote, revealed: open(p)
     })),
     chat: room.chat.slice(-60)
@@ -850,6 +856,19 @@ const server = http.createServer((req, res) => {
   if (req.url.startsWith('/health')) {
     res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8' });
     return res.end('ok');
+  }
+  if (req.url.startsWith('/avatars/')) {
+    const id = decodeURIComponent(req.url.slice(9).split('?')[0]).replace(/\.jpg$/i, '');
+    if (id === 'index.json') {
+      res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'public, max-age=300' });
+      return res.end(AV_INDEX);
+    }
+    if (AVATARS.has(id)) { // только имена из белого списка — выйти из папки нельзя
+      res.writeHead(200, { 'content-type': 'image/jpeg', 'cache-control': 'public, max-age=31536000, immutable' });
+      return res.end(readFileSync(new URL(id + '.jpg', AV_DIR)));
+    }
+    res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' });
+    return res.end('not found');
   }
   res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
   res.end(HTML);
@@ -881,20 +900,22 @@ io.on('connection', socket => {
     catch (e) { cb({ ok: false, error: e.user ? e.message : 'Ошибка сервера' }); if (!e.user) console.error(e); }
   });
 
-  on('room:create', ({ name, settings }) => {
+  on('room:create', ({ name, settings, avatar }) => {
     if (cur()) fail('Вы уже в комнате');
-    const p = newPlayer(name); p.sid = socket.id;
+    const p = newPlayer(name, avatar); p.sid = socket.id;
     const room = createRoom(settings, p, notify); bind(room, p); room.notify();
   });
-  on('room:join', ({ name, code }) => {
+  on('room:join', ({ name, code, avatar }) => {
     if (cur()) fail('Вы уже в комнате');
     const room = rooms.get(String(code || '').trim().toUpperCase()) || fail('Комната не найдена');
-    const p = newPlayer(name); bind(room, p); addPlayer(room, p);
+    const p = newPlayer(name, avatar); bind(room, p); addPlayer(room, p);
   });
   on('rooms:list', () => ({
     list: [...rooms.values()].filter(r => r.settings.isPublic && r.phase === 'LOBBY')
-      .map(r => ({ code: r.code, host: r.players.get(r.hostId)?.name, count: r.players.size, max: r.settings.max }))
+      .map(r => ({ code: r.code, host: r.players.get(r.hostId)?.name, hostAvatar: r.players.get(r.hostId)?.avatar || null, count: r.players.size, max: r.settings.max }))
   }));
+  // Смена аватарки внутри комнаты: avatar = id или null (снять). Публичное поле, видно всем в комнате.
+  on('profile:avatar', ({ avatar }) => { const { room, p } = need(); p.avatar = cleanAvatar(avatar); room.notify(); });
   on('room:ready', ({ value }) => { const { room, p } = need(); setReady(room, p.id, value); });
   on('room:settings', s => { const { room, p } = need(); setSettings(room, p.id, s); });
   on('room:start', () => { const { room, p } = need(); start(room, p.id); });

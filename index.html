@@ -48,7 +48,23 @@ label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--t2)}
 .bd{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:99px;font-size:12px;font-weight:700;color:var(--t2);background:rgba(255,255,255,.05);white-space:nowrap}
 .bd.ok{color:var(--ok);background:rgba(127,176,143,.12)}.bd.wa{color:var(--wa);background:rgba(212,168,96,.12)}.bd.dn{color:var(--dnt);background:rgba(201,98,92,.12)}.bd.ac{color:var(--ac);background:rgba(140,189,235,.12)}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--t3);flex:none}.dot.on{background:var(--ok)}
-.av{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:10px;font-weight:700;background:hsl(var(--h) 20% 27%);color:hsl(var(--h) 45% 82%)}
+.av{position:relative;overflow:hidden;display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:24%;font-weight:700;background:hsl(var(--h) 20% 27%);color:hsl(var(--h) 45% 82%)}
+.av img{display:block;width:100%;height:100%;object-fit:cover}.av .l{font-style:normal}
+.av.xl{width:64px;height:64px;font-size:24px}
+.av .g0{position:absolute;inset:0;display:grid;place-items:center;background:inherit;animation:avout .24s var(--e) forwards;pointer-events:none}
+.av.sw>:not(.g0){animation:avin .24s var(--e)}
+@keyframes avin{from{opacity:0;transform:scale(.92)}}@keyframes avout{to{opacity:0;transform:scale(1.06)}}
+.avp{display:flex;flex-direction:column;gap:12px;margin-top:6px;padding-top:14px;border-top:1px solid var(--ln)}
+.avh{display:flex;align-items:center;gap:14px}.avh>div{display:flex;flex-direction:column;gap:2px}.avh b{color:var(--tx)}
+.avg{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:12px;max-height:340px;overflow-y:auto;padding:6px 8px 8px 6px;margin:0 -8px 0 -6px}
+.avb{position:relative;aspect-ratio:1;padding:0;border:0;background:none;border-radius:24%;cursor:pointer;box-shadow:0 0 0 0 var(--bg2),0 0 0 0 var(--ac);transition:box-shadow .24s var(--e),transform .24s var(--e)}
+.avb img{display:block;width:100%;height:100%;object-fit:cover;border-radius:24%;opacity:.82;transition:opacity .24s var(--e),transform .24s var(--e)}
+.avb:hover img{opacity:1;transform:scale(1.04)}.avb:active{transform:scale(.94)}
+.avb:focus-visible{outline:2px solid var(--ac2);outline-offset:4px}
+.avb.on{box-shadow:0 0 0 2px var(--bg2),0 0 0 4px var(--ac);animation:avpop .28s var(--e)}.avb.on img{opacity:1}
+.avb .avk{position:absolute;right:-5px;bottom:-5px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--ac);color:#04101C;border:2px solid var(--bg2);box-sizing:content-box;opacity:0;transform:scale(.4);transition:opacity .22s var(--e),transform .26s var(--sp)}
+.avb.on .avk{opacity:1;transform:scale(1)}.avk svg{width:12px;height:12px;stroke-width:2.6}
+@keyframes avpop{0%{transform:scale(.9)}55%{transform:scale(1.07)}100%{transform:scale(1)}}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.grow{flex:1}
 .shell{display:grid;grid-template-columns:240px 1fr;min-height:100dvh}
 .side{position:sticky;top:0;height:100dvh;display:flex;flex-direction:column;gap:4px;padding:16px 12px;margin:12px 0 12px 12px;height:calc(100dvh - 24px);border-radius:16px}
@@ -97,7 +113,7 @@ label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--t2)}
 .ts{display:flex;gap:10px;align-items:center;padding:11px 14px;border-radius:12px;background:rgba(8,10,15,.62);-webkit-backdrop-filter:blur(22px) saturate(150%);backdrop-filter:blur(22px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 10px 30px rgba(0,0,0,.5),0 0 30px -10px rgba(140,189,235,.3)!important;border:1px solid var(--ln);box-shadow:0 8px 24px rgba(0,0,0,.35);animation:mi .22s var(--e)}.ts.dn{border-color:rgba(201,98,92,.5)}.ts.ok{border-color:rgba(127,176,143,.5)}
 @keyframes up{from{opacity:0;transform:translateY(18px) scale(.96)}}@keyframes rv{from{background:rgba(140,189,235,.3);box-shadow:0 0 22px rgba(140,189,235,.5)}}@keyframes flip{from{opacity:0;transform:perspective(500px) rotateX(-80deg)}}
 .scr,.sec.show{animation:up .55s var(--sp)}.tr.rv{animation:flip .7s var(--sp),rv 1s var(--e)}.tr.rv span:last-child{color:var(--ac2)}
-.m{display:flex;gap:10px}.m.sys{justify-content:center;text-align:center}.m>div{min-width:0}.av.s{width:30px;height:30px;font-size:12px;border-radius:8px}.m time{color:var(--t3);font-size:11px;margin-left:6px}
+.m{display:flex;gap:10px}.m.sys{justify-content:center;text-align:center}.m>div{min-width:0}.av.s{width:30px;height:30px;font-size:12px}.m time{color:var(--t3);font-size:11px;margin-left:6px}
 .tc{display:flex;align-items:center;gap:6px}.tc svg{width:14px;height:14px;color:var(--t3)}
 .off{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:60;padding:9px 16px;border-radius:12px;color:var(--dnt);border:1px solid rgba(201,98,92,.4)!important}
 
@@ -162,7 +178,7 @@ const ic=n=>`<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="${IC
 const token=localStorage.bk_token||(localStorage.bk_token=crypto.randomUUID());
 const socket=io({auth:{token}});
 const seenR=new Set();let seenOn=false;let S=null,tab='game',conn=false,rooms=[],stats={},skew=0,prev='',pr=-1,view='home',modal=null,sel=null,busy='',joinErr='',focusM=false,focusId=null;
-let name=localStorage.bk_name||'',codeVal=new URLSearchParams(location.search).get('room')||'',calm=localStorage.bk_calm==='1';
+let name=localStorage.bk_name||'',avatar=localStorage.bk_avatar||'',avList=[],codeVal=new URLSearchParams(location.search).get('room')||'',calm=localStorage.bk_calm==='1';
 const cfg={max:8,pct:50,discuss:120,vote:45,isPublic:false};
 const MAX=[4,5,6,7,8,9,10,11,12],PCT=[30,40,50,60],DIS=[30,60,120,180,300],VOT=[15,30,45,60,120];
 const opts=(a,v,f=x=>x)=>a.map(x=>`<option value="${x}" ${x==v?'selected':''}>${f(x)}</option>`).join('');
@@ -187,11 +203,20 @@ const tm=()=>{if(!S||!S.endsAt)return '--:--';const l=Math.max(0,Math.ceil((S.en
 setInterval(()=>document.querySelectorAll('.tm').forEach(t=>{t.textContent=tm();t.classList.toggle('lo',!!S&&!!S.endsAt&&S.endsAt-Date.now()-skew<10500)}),250);
 
 /* ---- DOM patching: keeps focus, scroll, selects and CSS transitions between renders ---- */
+function avSwap(na,nb){ // плавная смена аватарки: старое содержимое растворяется поверх нового
+  const g=document.createElement('span');g.className='g0';while(na.firstChild)g.appendChild(na.firstChild);
+  for(const at of [...na.attributes])if(!nb.hasAttribute(at.name))na.removeAttribute(at.name);
+  for(const at of [...nb.attributes])na.setAttribute(at.name,at.value);
+  while(nb.firstChild)na.appendChild(nb.firstChild);
+  na.appendChild(g);na.classList.add('sw');
+  setTimeout(()=>{g.remove();na.classList.remove('sw')},260);
+}
 function morph(a,b){
   const A=[...a.childNodes],B=[...b.childNodes];
   B.forEach((nb,i)=>{const na=A[i];
     if(!na){a.appendChild(nb);return}
     if(na.nodeType!==nb.nodeType||na.nodeName!==nb.nodeName||(na.dataset&&na.dataset.scr!==nb.dataset.scr)){a.replaceChild(nb,na);return}
+    if(na.classList&&na.classList.contains('av')&&na.dataset.k!==nb.dataset.k){avSwap(na,nb);return}
     if(nb.nodeType===3){if(na.nodeValue!==nb.nodeValue)na.nodeValue=nb.nodeValue;return}
     for(const at of [...na.attributes])if(!nb.hasAttribute(at.name)&&at.name!=='value')na.removeAttribute(at.name);
     for(const at of [...nb.attributes])if(at.name!=='value'&&na.getAttribute(at.name)!==at.value)na.setAttribute(at.name,at.value);
@@ -216,12 +241,17 @@ function render(){
 
 /* ---- shared pieces ---- */
 const hue=s=>[...String(s)].reduce((a,c)=>a+c.charCodeAt(0)*37,0)%360;
-const av=p=>`<span class="av" style="--h:${hue(p.id||p.name)}" aria-hidden="true">${esc([...(p.name||'?')][0].toUpperCase())}</span>`;
+/* Единый компонент аватарки (аналог <UserAvatar>): p = {id,name,avatar}, c = размер ('s' | 'xl' | ''). Без avatar — инициал. */
+const avUrl=id=>'/avatars/'+encodeURIComponent(id)+'.jpg';
+const av=(p,c='')=>{const k=p.avatar||'';return `<span class="av ${c}" data-k="${esc(k)}" style="--h:${hue(p.id||p.name)}" aria-hidden="true">${k?`<img src="${avUrl(k)}" alt="" width="256" height="256" decoding="async">`:`<b class="l">${esc([...(p.name||'?')][0].toUpperCase())}</b>`}</span>`};
+/* Хранение выбора: сейчас localStorage + публичное поле avatar у игрока на сервере. Для перехода на API достаточно заменить эти две функции. */
+const saveAvatar=id=>{avatar=id;try{localStorage.bk_avatar=id}catch(e){}if(S)act('profile:avatar',{avatar:id||null},1)};
+fetch('/avatars/index.json').then(r=>r.json()).then(l=>{avList=l;if(avatar&&!l.includes(avatar))saveAvatar('');render()}).catch(()=>{});
 const stat=()=>`<span class="bd ${conn?'ok':'dn'}" data-scr="${conn}"><span class="dot ${conn?'on':''}"></span>${conn?'Онлайн':'Нет связи'}</span>`;
 const kv=(k,v)=>`<div class="kv"><span>${k}</span><span>${esc(v)}</span></div>`;
 const seatsFor=(n,p)=>Math.max(1,Math.min(n-1,Math.round(n*p/100)));
 const normCode=v=>{const m=String(v).match(/(?:BK)?[-\s]?(\d{5})/i);return m?'BK-'+m[1]:''};
-function chatBox(){return `<div class="log" role="log" aria-label="Чат и события">${S.chat.map(m=>m.sys?`<div class="m sys">${esc(m.text)}</div>`:`<div class="m ${m.out?'o':''}">${av({id:m.id,name:m.name}).replace('class="av"','class="av s"')}<div><b>${esc(m.name)}</b>${m.out?' <small>(наблюдает)</small>':''}${m.t?`<time>${new Date(m.t).toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'})}</time>`:''}<br>${esc(m.text)}</div></div>`).join('')||'<small>Сообщений пока нет.</small>'}</div>
+function chatBox(){return `<div class="log" role="log" aria-label="Чат и события">${S.chat.map(m=>m.sys?`<div class="m sys">${esc(m.text)}</div>`:`<div class="m ${m.out?'o':''}">${av({id:m.id,name:m.name,avatar:(S.players.find(x=>x.id===m.id)||{avatar:m.av}).avatar},'s')}<div><b>${esc(m.name)}</b>${m.out?' <small>(наблюдает)</small>':''}${m.t?`<time>${new Date(m.t).toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'})}</time>`:''}<br>${esc(m.text)}</div></div>`).join('')||'<small>Сообщений пока нет.</small>'}</div>
 <form class="row" data-f="chat" style="flex-wrap:nowrap"><input id="msg" maxlength="300" placeholder="Написать сообщение" aria-label="Сообщение" autocomplete="off"><button class="ib" aria-label="Отправить">${ic('send')}</button></form>`}
 const copy=t=>navigator.clipboard?.writeText(t).then(()=>toast('Скопировано','ok'),()=>toast('Не удалось скопировать'));
 function ask(title,text,ok,fn){modal={t:'c',title,text,ok,fn};focusM=true;render()}
@@ -231,10 +261,11 @@ const LOGO='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAA
 function sidebar(){const N=[['home','home','Главная'],['create','plus','Создать комнату'],['rooms','search','Найти комнату'],['rules','book','Правила игры'],['settings','gear','Настройки']];
   return `<aside class="side gl"><div class="logo"><span class="dav"><img src="${LOGO}" alt="" width="26" height="26"><i class="dsd"></i></span>BUNKER</div>${N.map(([k,i,l])=>`<button class="nav" data-a="${k==='create'?'create':'nav'}" data-v="${k}" ${view===k?'aria-current="page"':''}>${ic(i)}${l}</button>`).join('')}
 <div class="me"><div class="row">${stat()}</div><small>${stats.online??0} игроков · ${stats.rooms??0} комнат</small>
-<button class="nav" data-a="nav" data-v="settings" style="padding:6px 8px">${av({id:name||'?',name:name||'И'})}<span style="display:flex;flex-direction:column"><b style="color:var(--tx)">${esc(name||'Игрок')}</b><small>v0.1</small></span></button></div></aside>
+<button class="nav" data-a="nav" data-v="settings" style="padding:6px 8px">${av({id:name||'?',name:name||'И',avatar})}<span style="display:flex;flex-direction:column"><b style="color:var(--tx)">${esc(name||'Игрок')}</b><small>v0.1</small></span></button></div></aside>
 <nav class="mnav" aria-label="Разделы">${N.map(([k,i,l])=>`<button data-a="${k==='create'?'create':'nav'}" data-v="${k}" ${view===k?'aria-current="page"':''}>${ic(i)}${l.split(' ')[0]}</button>`).join('')}</nav>`}
-const roomRow=r=>`<div class="li"><span class="code">${r.code}</span><div class="grow"><b>${esc(r.host||'Игрок')}</b><br><small>Ведущий</small></div><div class="bar" style="flex:none;width:56px"><i style="width:${r.count/r.max*100}%"></i></div><small>${r.count}/${r.max}</small><button class="btn sm" data-a="join" data-v="${r.code}">Войти</button></div>`;
+const roomRow=r=>`<div class="li"><span class="code">${r.code}</span>${av({id:r.code,name:r.host||'И',avatar:r.hostAvatar},'s')}<div class="grow"><b>${esc(r.host||'Игрок')}</b><br><small>Ведущий</small></div><div class="bar" style="flex:none;width:56px"><i style="width:${r.count/r.max*100}%"></i></div><small>${r.count}/${r.max}</small><button class="btn sm" data-a="join" data-v="${r.code}">Войти</button></div>`;
 const joinForm=()=>`<form class="card" data-f="join"><h3>Войти по коду</h3><label>Код приглашения<input data-b="code" value="${esc(codeVal)}" placeholder="BK-12345" autocomplete="off" aria-invalid="${!!joinErr}"></label>${joinErr?`<div class="err" role="alert">${joinErr}</div>`:''}<button class="btn ${busy==='join'?'ld':''}" ${busy?'disabled':''}>Присоединиться</button></form>`;
+const avatarPicker=()=>`<div class="avp"><div class="avh">${av({id:name||'?',name:name||'И',avatar},'xl')}<div><b>Аватарка</b><small>${avatar?'Нажмите на выбранную, чтобы снять.':'Выберите картинку — её увидят другие игроки.'}</small></div></div><div class="avg" role="listbox" aria-label="Выбор аватарки">${avList.map((id,i)=>`<button type="button" class="avb ${id===avatar?'on':''}" role="option" aria-selected="${id===avatar}" aria-label="Аватарка ${i+1}" data-a="avatar" data-v="${esc(id)}"><img src="${avUrl(id)}" alt="" width="256" height="256" loading="lazy" decoding="async"><span class="avk">${ic('check')}</span></button>`).join('')||'<small>Загрузка аватарок…</small>'}</div></div>`;
 const callsign=()=>`<label style="max-width:280px">Позывной<input data-b="name" maxlength="20" value="${esc(name)}" placeholder="Как вас называть" autocomplete="nickname"></label>`;
 function menu(){let b='';
   if(view==='home')b=`<header class="hd"><div style="display:flex;flex-direction:column;gap:10px"><h1>Привет, ${esc(name||'игрок')}</h1>${callsign()}${name?'':'<small>Без позывного вы войдёте как «Игрок».</small>'}</div><span class="bd">${stats.online??0} в сети · ${stats.rooms??0} комнат</span></header>
@@ -245,7 +276,7 @@ function menu(){let b='';
   else if(view==='rules')b=`<header class="hd"><h1>Правила игры</h1></header><section class="card"><h3>Досье</h3><p class="t2">У каждого игрока 6 скрытых карт: ${KEYS.map(k=>LBL[k]).join(', ')}. Бункер вмещает ${PCT[0]}–${PCT[3]}% игроков, но не меньше одного места.</p></section>
 <section class="card"><h3>Раунд</h3>${[['Раскрытие карт','60 секунд. Откройте одну карту. В первом раунде это профессия. Не успели — карта откроется сама.'],['Обсуждение','Убедите остальных, что место нужно именно вам.'],['Голосование','Выберите, кого исключить. Нельзя голосовать за себя, голос отзывать нельзя.'],['Итоги','Больше всех голосов — изгнан. При ничьей 30 секунд обсуждения и переголосование между лидерами; вторая ничья решается жребием.']].map((x,i)=>`<div class="li"><span class="code" style="width:20px">${i+1}</span><div><b>${x[0]}</b><br><small>${x[1]}</small></div></div>`).join('')}</section>
 <section class="card"><h3>Конец игры</h3><p class="t2">Матч идёт, пока не останется столько игроков, сколько мест в бункере. Для старта нужно минимум 4 игрока.</p></section>`;
-  else b=`<header class="hd"><h1>Настройки</h1>${stat()}</header><section class="card"><h3>Профиль</h3>${callsign()}</section><section class="card"><h3>Интерфейс</h3><label class="ck"><input type="checkbox" data-c="calm" ${calm?'checked':''}>Уменьшить анимации</label><small>Настройка хранится в этом браузере.</small></section><small>BUNKER v0.1</small>`;
+  else b=`<header class="hd"><h1>Настройки</h1>${stat()}</header><section class="card"><h3>Профиль</h3>${callsign()}${avatarPicker()}</section><section class="card"><h3>Интерфейс</h3><label class="ck"><input type="checkbox" data-c="calm" ${calm?'checked':''}>Уменьшить анимации</label><small>Настройка хранится в этом браузере.</small></section><small>BUNKER v0.1</small>`;
   return `<div class="shell" data-scr="menu">${sidebar()}<main class="pg scr" data-scr="${view}">${b}</main></div>`}
 const dur=x=>x<60?x+' с':x/60+' мин',FM={max:x=>x,pct,discuss:dur,vote:dur},LV={max:'Игроков',pct:'Мест в бункере',discuss:'Обсуждение',vote:'Голосование'},AR={pct:PCT,discuss:DIS,vote:VOT};
 const ctl=(k,val,m)=>`<div class="ct2" role="group" aria-label="${LV[k]}"><span>${LV[k]}</span>${k==='max'?`<div class="stp"><button type="button" class="ib" data-a="${m}" data-v="max:${val-1}" aria-label="Меньше игроков" ${val<=4?'disabled':''}>−</button><b class="np" data-scr="${val}" aria-live="polite">${val}</b><button type="button" class="ib" data-a="${m}" data-v="max:${val+1}" aria-label="Больше игроков" ${val>=12?'disabled':''}>+</button></div>`:`<div class="sg" role="radiogroup">${AR[k].map(x=>`<button type="button" role="radio" aria-checked="${x==val}" class="${x==val?'on':''}" data-a="${m}" data-v="${k}:${x}">${FM[k](x)}</button>`).join('')}</div>`}</div>`;
@@ -304,9 +335,10 @@ function final(){const h=S.hostId===S.me.id,w=S.players.filter(p=>p.alive),l=S.p
 
 /* ---- actions ---- */
 const A={
+  avatar:v=>saveAvatar(avatar===v?'':v),
   nav:v=>{view=v;joinErr=''},create:()=>{modal={t:'m'};focusM=true},close:()=>closeM(),yes:()=>closeM(modal.fn),refresh:()=>listRooms(),
-  async doCreate(){busy='create';render();const r=await act('room:create',{name,settings:cfg});busy='';if(r.ok){modal=null;toast('Комната создана','ok')}render()},
-  async join(c){const code=normCode(c);if(!code){joinErr='Введите код в формате BK-12345';return render()}busy='join';render();const r=await act('room:join',{name,code},1);busy='';joinErr=r.ok?'':r.error;if(!r.ok)toast(r.error);render()},
+  async doCreate(){busy='create';render();const r=await act('room:create',{name,settings:cfg,avatar});busy='';if(r.ok){modal=null;toast('Комната создана','ok')}render()},
+  async join(c){const code=normCode(c);if(!code){joinErr='Введите код в формате BK-12345';return render()}busy='join';render();const r=await act('room:join',{name,code,avatar},1);busy='';joinErr=r.ok?'':r.error;if(!r.ok)toast(r.error);render()},
   copyCode:()=>copy(S.code),copyLink:()=>copy(location.origin+'/?room='+S.code),
   start:()=>act('room:start'),ready:()=>act('room:ready',{value:!S.players.find(p=>p.id===S.me.id).ready}),
   leave:()=>ask('Покинуть комнату?',S.phase==='LOBBY'||S.phase==='STARTING'?'Вы вернётесь в главное меню.':'Вы будете исключены из матча и не сможете вернуться.','Покинуть',()=>act('room:leave')),
