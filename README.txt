@@ -1,6 +1,4 @@
-Положите сюда файл шрифта Ethnocentric с одним из имён:
-  ethnocentric.woff2 (лучше всего), ethnocentric.woff, ethnocentric.otf или ethnocentric.ttf
-Сервер отдаёт его по адресу /fonts/<имя>, сайт подхватит автоматически.
-Пока файла нет, используется запасной шрифт Onest.
-Важно: в Ethnocentric нет кириллицы, поэтому русские, казахские и украинские буквы рисуются запасным шрифтом.
-Лицензию Ethnocentric проверьте на странице автора (Typodermic) перед публикацией сайта.
+Здесь лежит шрифт Ethnocentric (ethnocentric.otf). Сервер отдаёт его по адресу /fonts/ethnocentric.otf.
+Другие допустимые имена: ethnocentric.woff2, ethnocentric.woff, ethnocentric.ttf.
+Шрифт содержит латиницу, кириллицу и казахские буквы (Қ, Ғ, Ү, І).
+Лицензия: Typodermic Desktop EULA, проверьте условия для веб-использования перед публикацией.
