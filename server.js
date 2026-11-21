@@ -10,15 +10,33 @@
 */
 import http from 'node:http';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import { randomInt, randomBytes } from 'node:crypto';
 import { Server } from 'socket.io';
 
 const HTML = readFileSync(new URL('./index.html', import.meta.url)); // клиент: index.html
 
-// Аватарки: public/avatars/<id>.jpg, id = имя файла без расширения. Белый список строится при старте.
-const AV_DIR = new URL('./public/avatars/', import.meta.url);
-const AVATARS = new Set(existsSync(AV_DIR) ? readdirSync(AV_DIR).filter(f => /^[\w-]+\.jpg$/i.test(f)).map(f => f.replace(/\.jpg$/i, '')) : []);
-const AV_INDEX = JSON.stringify([...AVATARS].sort());
+// Аватарки: id = имя файла без расширения. Ищем картинки в public/avatars/, avatars/ и (запасной вариант)
+// по всему проекту, кроме node_modules/.git — чтобы работало, даже если файлы лежат в другой папке репозитория.
+const AV_EXT = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
+const AV_ROOT = fileURLToPath(new URL('./', import.meta.url));
+const AVATARS = new Map(); // id -> { file, type }
+(function scanAvatars() {
+  const walk = (dir, depth) => {
+    let items; try { items = readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const it of items) {
+      const full = join(dir, it.name);
+      if (it.isDirectory()) { if (depth < 4 && !['node_modules', '.git', '__MACOSX'].includes(it.name)) walk(full, depth + 1); continue; }
+      const m = /^([\w-]+)\.(jpe?g|png|webp)$/i.exec(it.name);
+      if (m && !AVATARS.has(m[1]) && !/^(logo|favicon|icon)/i.test(m[1])) AVATARS.set(m[1], { file: full, type: AV_EXT[m[2].toLowerCase()] });
+    }
+  };
+  for (const d of ['public/avatars', 'avatars']) if (existsSync(join(AV_ROOT, d))) walk(join(AV_ROOT, d), 0);
+  if (!AVATARS.size) walk(AV_ROOT, 0);
+  console.log(`Avatars found: ${AVATARS.size}`);
+})();
+const AV_INDEX = JSON.stringify([...AVATARS.keys()].sort());
 const cleanAvatar = id => { id = String(id || ''); return AVATARS.has(id) ? id : null; };
 
 
@@ -858,14 +876,15 @@ const server = http.createServer((req, res) => {
     return res.end('ok');
   }
   if (req.url.startsWith('/avatars/')) {
-    const id = decodeURIComponent(req.url.slice(9).split('?')[0]).replace(/\.jpg$/i, '');
+    const id = decodeURIComponent(req.url.slice(9).split('?')[0]).replace(/\.(jpe?g|png|webp)$/i, '');
     if (id === 'index.json') {
-      res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'public, max-age=300' });
+      res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-cache' });
       return res.end(AV_INDEX);
     }
-    if (AVATARS.has(id)) { // только имена из белого списка — выйти из папки нельзя
-      res.writeHead(200, { 'content-type': 'image/jpeg', 'cache-control': 'public, max-age=31536000, immutable' });
-      return res.end(readFileSync(new URL(id + '.jpg', AV_DIR)));
+    const a = AVATARS.get(id); // только файлы из белого списка — выйти за пределы проекта нельзя
+    if (a) {
+      res.writeHead(200, { 'content-type': a.type, 'cache-control': 'public, max-age=86400' });
+      return res.end(readFileSync(a.file));
     }
     res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' });
     return res.end('not found');
