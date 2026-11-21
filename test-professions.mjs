@@ -4,11 +4,11 @@ import { readFileSync } from 'node:fs';
 import { randomInt } from 'node:crypto';
 import assert from 'node:assert/strict';
 const src = readFileSync(new URL('./server.js', import.meta.url), 'utf8');
-const lib = src.slice(src.indexOf('const PROF = ['), src.indexOf('const CATASTROPHES'));
+const lib = src.slice(src.indexOf('const PROF = ['), src.indexOf('const genBunker'));
 const api = new Function('randomInt', 'process',
   "const KEYS = ['profession','bio','health','hobby','baggage','fact'];" + lib +
-  'return {PROF,BIO,HEALTH,HOBBY,BAG,FACT,shuffle,makeRng,makeDeck,dealDossiers,KEYS};')(randomInt, { env: {} });
-const { PROF, BIO, HEALTH, HOBBY, BAG, FACT, shuffle, makeDeck, dealDossiers, KEYS } = api;
+  'return {PROF,BIO,HEALTH,HOBBY,BAG,FACT,CATASTROPHES,drawCatastrophe,shuffle,makeRng,makeDeck,dealDossiers,KEYS};')(randomInt, { env: {} });
+const { PROF, BIO, HEALTH, HOBBY, BAG, FACT, CATASTROPHES: CAT, drawCatastrophe, shuffle, makeDeck, dealDossiers, KEYS } = api;
 
 // 1. Количества, пустые строки, дубликаты
 const expected = { profession: [PROF, 70], bio: [BIO, 90], health: [HEALTH, 70], hobby: [HOBBY, 70], baggage: [BAG, 100], fact: [FACT, 70] };
@@ -48,5 +48,17 @@ const cnt = new Map(); const N = 70000;
 for (let i = 0; i < N; i++) { const c = dealDossiers(1)[0].profession; cnt.set(c, (cnt.get(c) || 0) + 1); }
 const p = 1 / 70, tol = 5 * Math.sqrt(p * (1 - p) / N);
 for (const a of PROF) assert.ok(Math.abs((cnt.get(a) || 0) / N - p) < tol, `перекос: ${a}`);
+
+// 6. Катастрофы: ровно 30, без пустых и дублей, равные шансы, seed
+assert.equal(CAT.length, 30);
+assert.ok(CAT.every(c => c.title.trim() && c.text.trim()));
+assert.equal(new Set(CAT.map(c => c.title)).size, 30);
+assert.equal(new Set(CAT.map(c => c.text)).size, 30);
+assert.deepEqual(drawCatastrophe('s1'), drawCatastrophe('s1'));
+const cc = new Map(); const M = 60000;
+for (let i = 0; i < M; i++) { const t = drawCatastrophe().title; cc.set(t, (cc.get(t) || 0) + 1); }
+const pc = 1 / 30, tc = 5 * Math.sqrt(pc * (1 - pc) / M);
+for (const c of CAT) assert.ok(Math.abs((cc.get(c.title) || 0) / M - pc) < tc, `перекос: ${c.title}`);
+console.log('catastrophes', CAT.length);
 
 console.log('OK', Object.fromEntries(Object.entries(expected).map(([k, [a]]) => [k, a.length])), 'total', total);
