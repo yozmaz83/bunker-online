@@ -136,18 +136,18 @@ label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--t2)}
 .log{max-height:55dvh}.ts,#toasts{left:14px}}
 #sp0{position:fixed;inset:0;z-index:8999;background:#03050a;animation:sp0x .4s linear 14s forwards}@keyframes sp0x{to{opacity:0;visibility:hidden}}
 .sp{position:fixed;inset:0;z-index:9000;background:#03050a;overflow:hidden;opacity:1;transition:opacity .6s ease;touch-action:none}
-.sp.pre{opacity:0}.sp.off{opacity:0;pointer-events:none;transition:opacity 1.3s cubic-bezier(.4,0,.2,1)}
+.sp.sp-pre{opacity:0}.sp.sp-out{opacity:0;pointer-events:none;transition:opacity 1.3s cubic-bezier(.4,0,.2,1)}
 .sp canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .sp-tt{position:absolute;left:0;right:0;top:var(--cy,50%);transform:translateY(-50%);text-align:center;opacity:0;transition:opacity 1.6s ease;pointer-events:none}
-.sp.tx .sp-tt,.sp.tx .sp-in{opacity:1}
+.sp.sp-tx .sp-tt,.sp.sp-tx .sp-in{opacity:1}
 .sp-tt b{font:700 clamp(15px,1.9vw,21px)/1 var(--px);letter-spacing:.5em;margin-right:-.5em;color:#E9F4FF;text-shadow:0 0 10px #000,0 0 3px #000,0 0 14px rgba(140,189,235,.5),0 0 36px rgba(110,170,255,.22)}
 .sp-in{position:absolute;left:0;right:0;top:var(--bt,70%);display:flex;justify-content:center;gap:16px;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.2em;color:#7C8FA6;opacity:0;transition:opacity 1.2s ease .3s;pointer-events:none}
 .sp-p{font-variant-numeric:tabular-nums;color:#A9CBEA;min-width:4ch}
 .sp-fb{display:none}
-.sp.nogl .sp-fb{display:block;position:absolute;left:50%;top:var(--cy);width:var(--cw);height:var(--ch);transform:translate(-50%,-50%);border-radius:999px;border:1px solid rgba(160,205,255,.4);overflow:hidden;background:#05080e;box-shadow:0 0 40px -8px rgba(110,180,255,.35)}
+.sp.sp-nogl .sp-fb{display:block;position:absolute;left:50%;top:var(--cy);width:var(--cw);height:var(--ch);transform:translate(-50%,-50%);border-radius:999px;border:1px solid rgba(160,205,255,.4);overflow:hidden;background:#05080e;box-shadow:0 0 40px -8px rgba(110,180,255,.35)}
 .sp-fb i{position:absolute;left:0;right:0;bottom:0;height:calc(var(--f,0)*100%);background:#000;box-shadow:0 -1px 10px rgba(140,189,235,.55)}
-@media(prefers-reduced-motion:reduce){.sp,.sp.off,.sp-tt,.sp-in{transition-duration:.3s!important}}
-.reduce .sp,.reduce .sp.off,.reduce .sp-tt,.reduce .sp-in{transition-duration:.3s!important}
+@media(prefers-reduced-motion:reduce){.sp,.sp.sp-out,.sp-tt,.sp-in{transition-duration:.3s!important}}
+.reduce .sp,.reduce .sp.sp-out,.reduce .sp-tt,.reduce .sp-in{transition-duration:.3s!important}
 </style></head>
 <body><div id="sp0" aria-hidden="true"></div><div id="app"></div><div id="offl"></div><div id="toasts" role="status" aria-live="polite"></div>
 <script src="/socket.io/socket.io.js"></script>
@@ -473,11 +473,11 @@ function initGL(cv,lay){
 /* ---- экземпляр заставки ---- */
 function open(mode,o={}){
  if(cur)return cur;
- const el=D.createElement('div');el.className='sp '+mode+(mode==='start'?' pre':'');
+ const el=D.createElement('div');el.className='sp '+mode+(mode==='start'?' sp-pre':'');
  el.setAttribute('role','status');el.setAttribute('aria-label','Загрузка');
  el.innerHTML='<canvas aria-hidden="true"></canvas><div class="sp-fb" aria-hidden="true"><i></i></div><div class="sp-tt"><b>ЗАГРУЗКА</b></div><div class="sp-in"><span class="sp-s">'+(mode==='start'?'DEPLOYING BUNKER...':'INITIALIZING SYSTEM...')+'</span><span class="sp-p" aria-hidden="true">0%</span></div>';
  D.body.append(el);
- if(mode==='boot'){const c0=D.getElementById('sp0');c0&&c0.remove()}else requestAnimationFrame(()=>el.classList.remove('pre'));
+ if(mode==='boot'){const c0=D.getElementById('sp0');c0&&c0.remove()}else requestAnimationFrame(()=>el.classList.remove('sp-pre'));
  const sS=el.querySelector('.sp-s'),sP=el.querySelector('.sp-p'),fb=el.querySelector('.sp-fb i');
  let LY={W:100,H:400,cy:300};
  const lay=()=>LY;
@@ -488,7 +488,7 @@ function open(mode,o={}){
   el.style.setProperty('--cw',W+'px');el.style.setProperty('--ch',H+'px');return[w,h]};
  calc();
  let gl=null;try{gl=initGL(el.querySelector('canvas'),lay)}catch(e){gl=null}
- if(!gl)el.classList.add('nogl');
+ if(!gl)el.classList.add('sp-nogl');
  const rs=()=>{const[w,h]=calc();gl&&gl.resize(w,h)};rs();addEventListener('resize',rs);
  const reduced=still(),seen=(()=>{try{return sessionStorage.bk_seen==='1'}catch(e){return false}})();
  const DUR=reduced?.6:seen?1.5:2.9,HARD=7;
@@ -514,13 +514,13 @@ function open(mode,o={}){
     const g=st.fast?1:Math.min(T,tf),gap=g-st.f,pf=st.f;
     if(gap>0)st.f=Math.min(g,st.f+Math.max(gap*Math.min(1,dt*(st.fast?2.5:5)),Math.min(gap,dt*.06)));
     st.sp+=((st.f-pf)/Math.max(dt,.001)-st.sp)*Math.min(1,dt*4);
-    if(st.f>=.999){st.f=1;st.phase='full';st.fullAt=now;el.classList.add('rdy');el.style.pointerEvents='none';sS.textContent='SYSTEM READY'}
+    if(st.f>=.999){st.f=1;st.phase='full';st.fullAt=now;el.classList.add('sp-rdy');el.style.pointerEvents='none';sS.textContent='SYSTEM READY'}
    }
    if(!reduced&&st.appear<1)st.appear=Math.min(1,st.appear+dt/1.2);
    const full=st.phase==='full',tt=full?(now-st.fullAt)/1000:0;
    st.flash=full?sm(0,.3,tt)*(1-sm(.3,1.6,tt))*(reduced?.25:1):0;
-   if(full){if(tt>(reduced?.15:.55))el.classList.add('off');if(tt>(reduced?.7:2))return destroy()}
-   if(st.f>.28||reduced)el.classList.add('tx');
+   if(full){if(tt>(reduced?.15:.55))el.classList.add('sp-out');if(tt>(reduced?.7:2))return destroy()}
+   if(st.f>.28||reduced)el.classList.add('sp-tx');
    sP.textContent=Math.round(st.f*100)+'%';
    if(gl){const u=gl.U;
     u.uT.value=reduced?4:age;u.uFill.value=st.f;
