@@ -6,10 +6,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#050609;--bg2:#0A0C11;--sf:#0E1118;--cd:rgba(4,6,10,.62);--ln:rgba(255,255,255,.08);--tx:#F2F4F8;--t2:#A0A9B8;--t3:#727D8E;--ac:#8CBDEB;--ac2:#BFE0FF;--ok:#7FB08F;--wa:#D4A860;--dn:#C9625C;--dnt:#E39A94;--e:cubic-bezier(.2,.8,.2,1);--sp:cubic-bezier(.34,1.56,.64,1);--px:Onest,Inter,system-ui,sans-serif}
+@font-face{font-family:Ethnocentric;src:local('Ethnocentric'),local('Ethnocentric Rg'),local('Ethnocentric-Regular'),url(/fonts/ethnocentric.woff2) format('woff2'),url(/fonts/ethnocentric.woff) format('woff'),url(/fonts/ethnocentric.otf) format('opentype'),url(/fonts/ethnocentric.ttf) format('truetype');font-weight:100 900;font-style:normal;font-display:swap}
+:root{--bg:#050609;--bg2:#0A0C11;--sf:#0E1118;--cd:rgba(4,6,10,.62);--ln:rgba(255,255,255,.08);--tx:#F2F4F8;--t2:#A0A9B8;--t3:#727D8E;--ac:#8CBDEB;--ac2:#BFE0FF;--ok:#7FB08F;--wa:#D4A860;--dn:#C9625C;--dnt:#E39A94;--e:cubic-bezier(.2,.8,.2,1);--sp:cubic-bezier(.34,1.56,.64,1);--px:var(--f);--f:Ethnocentric,Onest,Inter,system-ui,sans-serif}
 *{box-sizing:border-box}
 html{color-scheme:dark}
-body{margin:0;min-height:100dvh;background:var(--bg);color:var(--tx);font:500 14px/1.5 Onest,Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{margin:0;min-height:100dvh;background:var(--bg);color:var(--tx);font:500 14px/1.5 var(--f);-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
 radial-gradient(800px 520px at 15% -8%,rgba(100,170,255,.20),transparent 70%),radial-gradient(700px 520px at 100% 105%,rgba(80,140,230,.16),transparent 70%),
 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E")}
@@ -24,7 +25,7 @@ svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .gl .card,.gl .pc,.gl .gp,.gl .tile{-webkit-backdrop-filter:none;backdrop-filter:none}
 @supports not (backdrop-filter:blur(1px)){.gl,.card,.pc,.gp,.tile{background:#0E1118}}
 .card{background:var(--cd);border:1px solid var(--ln);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:10px;border:1px solid var(--ln);background:rgba(255,255,255,.045);color:var(--tx);font:700 14px Onest,Inter,sans-serif;cursor:pointer;transition:background .18s var(--e),border-color .18s var(--e),transform .3s var(--sp),box-shadow .3s var(--e)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:10px;border:1px solid var(--ln);background:rgba(255,255,255,.045);color:var(--tx);font:700 14px var(--f);cursor:pointer;transition:background .18s var(--e),border-color .18s var(--e),transform .3s var(--sp),box-shadow .3s var(--e)}
 .btn:hover:not(:disabled){background:rgba(255,255,255,.09);transform:translateY(-2px)}.btn:active:not(:disabled){transform:scale(.93)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .btn.pr{background:#7FB1E0;border-color:#7FB1E0;color:#0D141B}.btn.pr{box-shadow:0 0 26px -3px rgba(140,189,235,.6)}.btn.pr:hover:not(:disabled){background:var(--ac2);box-shadow:0 0 22px -3px rgba(140,189,235,.5)}
@@ -40,7 +41,7 @@ input[type=checkbox]::after{content:"";position:absolute;top:3px;left:3px;width:
 input[type=checkbox]:checked{background:rgba(140,189,235,.35);border-color:rgba(160,210,255,.6);box-shadow:0 0 16px -2px rgba(140,189,235,.6)}input[type=checkbox]:checked::after{transform:translateX(16px);background:#E6F3FF}
 .ct2{display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--t2)}.stk{display:flex;flex-direction:column;gap:14px}
 .sg,.stp{display:flex;gap:3px;padding:4px;border-radius:13px;background:rgba(0,0,0,.35);border:1px solid var(--ln);box-shadow:inset 0 2px 8px rgba(0,0,0,.55)}
-.sg button{flex:1;min-width:0;min-height:34px;padding:0 4px;border:0;border-radius:10px;background:none;color:var(--t2);font:600 13px Onest,Inter,sans-serif;white-space:nowrap;cursor:pointer;transition:background .2s var(--e),color .2s var(--e),box-shadow .25s var(--e),transform .15s var(--e)}
+.sg button{flex:1;min-width:0;min-height:34px;padding:0 4px;border:0;border-radius:10px;background:none;color:var(--t2);font:600 13px var(--f);white-space:nowrap;cursor:pointer;transition:background .2s var(--e),color .2s var(--e),box-shadow .25s var(--e),transform .15s var(--e)}
 .sg button:hover:not(.on){color:var(--tx);background:rgba(255,255,255,.06)}.sg button:active{transform:scale(.96)}
 .sg button.on{color:#04101C;background:linear-gradient(180deg,#CBE6FF,#8CBDEB);box-shadow:0 0 20px -2px rgba(140,189,235,.75),inset 0 1px 0 rgba(255,255,255,.7)}
 .stp{align-items:center;justify-content:space-between}.stp b{font:700 20px var(--px);color:var(--ac2);text-shadow:0 0 14px rgba(140,189,235,.6);font-variant-numeric:tabular-nums}.stp .ib{width:40px;height:34px;font-size:20px;line-height:1}
@@ -73,7 +74,7 @@ label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--t2)}
 .dav:hover{border-radius:14px;transform:scale(1.06)}
 .dav img{width:26px;height:26px;object-fit:contain;display:block;filter:drop-shadow(0 0 6px rgba(191,224,255,.45))}
 .dav .dsd{position:absolute;right:-2px;bottom:-2px;width:10px;height:10px;border-radius:50%;background:var(--ok);border:3px solid #0A0C11;box-sizing:content-box}
-.nav{display:flex;align-items:center;gap:12px;min-height:42px;padding:0 12px;border-radius:10px;border:0;background:none;color:var(--t2);font:600 14px Onest,Inter,sans-serif;cursor:pointer;text-align:left;position:relative;transition:.18s var(--e)}
+.nav{display:flex;align-items:center;gap:12px;min-height:42px;padding:0 12px;border-radius:10px;border:0;background:none;color:var(--t2);font:600 14px var(--f);cursor:pointer;text-align:left;position:relative;transition:.18s var(--e)}
 .nav:hover{background:rgba(255,255,255,.05);color:var(--tx)}.nav[aria-current=page]{background:rgba(140,189,235,.1);color:var(--ac)}.nav[aria-current=page]::before{content:"";position:absolute;left:-12px;top:10px;bottom:10px;width:3px;border-radius:3px;background:var(--ac)}
 .me{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding-top:12px;border-top:1px solid var(--ln)}
 .pg{max-width:880px;width:100%;margin:0 auto;padding:28px 24px 40px;display:flex;flex-direction:column;gap:16px}
@@ -145,7 +146,7 @@ label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--t2)}
 @media(max-width:900px){
 .shell{display:block}.side{display:none}.pg{padding:18px 14px 96px}.g2,.fg{grid-template-columns:1fr}.hero{padding:18px}
 .mnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(6,8,12,.72);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom)}
-.mnav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:58px;border:0;background:none;color:var(--t2);font:600 11px Onest,Inter,sans-serif;cursor:pointer}.mnav button[aria-current=page]{color:var(--ac)}
+.mnav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:58px;border:0;background:none;color:var(--t2);font:600 11px var(--f);cursor:pointer}.mnav button[aria-current=page]{color:var(--ac)}
 .lb{display:flex;flex-direction:column;padding:12px 12px 24px}.lb>.rt{order:3}.lb>.lf{order:2}.lb>.ct{order:1}.top{margin:8px 8px 0}
 .gm{height:auto;min-height:100dvh;padding-bottom:calc(58px + env(safe-area-inset-bottom))}.gb{display:block;padding:8px}.gc,.gs{display:contents}.sec{display:none;margin-bottom:10px}.sec.show{display:flex}
 .ga{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom));margin:0 8px 8px;z-index:19;background:rgba(6,8,12,.85)}.gm{padding-bottom:calc(138px + env(safe-area-inset-bottom))}
@@ -157,13 +158,14 @@ label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--t2)}
 .sp-tt{position:absolute;left:0;right:0;top:var(--cy,50%);transform:translateY(-50%);text-align:center;opacity:0;transition:opacity 1.6s ease;pointer-events:none}
 .sp.sp-tx .sp-tt,.sp.sp-tx .sp-in{opacity:1}
 .sp-tt b{font:700 clamp(15px,1.9vw,21px)/1 var(--px);letter-spacing:.5em;margin-right:-.5em;color:#E9F4FF;text-shadow:0 0 10px #000,0 0 3px #000,0 0 14px rgba(140,189,235,.5),0 0 36px rgba(110,170,255,.22)}
-.sp-in{position:absolute;left:0;right:0;top:var(--bt,70%);display:flex;justify-content:center;gap:16px;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.2em;color:#7C8FA6;opacity:0;transition:opacity 1.2s ease .3s;pointer-events:none}
+.sp-in{position:absolute;left:0;right:0;top:var(--bt,70%);display:flex;justify-content:center;gap:16px;font:600 11px/1 var(--f);letter-spacing:.2em;color:#7C8FA6;opacity:0;transition:opacity 1.2s ease .3s;pointer-events:none}
 .sp-p{font-variant-numeric:tabular-nums;color:#A9CBEA;min-width:4ch}
 .sp-fb{display:none}
 .sp.sp-nogl .sp-fb{display:block;position:absolute;left:50%;top:var(--cy);width:var(--cw);height:var(--ch);transform:translate(-50%,-50%);border-radius:999px;border:1px solid rgba(160,205,255,.4);overflow:hidden;background:#05080e;box-shadow:0 0 40px -8px rgba(110,180,255,.35)}
 .sp-fb i{position:absolute;left:0;right:0;bottom:0;height:calc(var(--f,0)*100%);background:#000;box-shadow:0 -1px 10px rgba(140,189,235,.55)}
 @media(prefers-reduced-motion:reduce){.sp,.sp.sp-out,.sp-tt,.sp-in{transition-duration:.3s!important}}
 .reduce .sp,.reduce .sp.sp-out,.reduce .sp-tt,.reduce .sp-in{transition-duration:.3s!important}
+button,input,select,textarea,option{font-family:var(--f)}
 </style></head>
 <body><div id="sp0" aria-hidden="true"></div><div id="app"></div><div id="offl"></div><div id="toasts" role="status" aria-live="polite"></div>
 <script src="/socket.io/socket.io.js"></script>
@@ -184,7 +186,134 @@ const MAX=[4,5,6,7,8,9,10,11,12],PCT=[30,40,50,60],DIS=[30,60,120,180,300],VOT=[
 const opts=(a,v,f=x=>x)=>a.map(x=>`<option value="${x}" ${x==v?'selected':''}>${f(x)}</option>`).join('');
 const pct=x=>x+'%',sec=x=>x+' с';
 
-function toast(m,t='dn'){const e=document.createElement('div');e.className='ts '+t;e.textContent=m;$('#toasts').append(e);setTimeout(()=>{e.classList.add('bye');setTimeout(()=>e.remove(),260)},3800)}
+/* ---- языки интерфейса: ru (исходный), en, kk, uk. Переводится интерфейс; тексты карт, катастроф и бункера приходят с сервера на русском. ---- */
+const LANGS=[['ru','Русский'],['en','English'],['kk','Қазақша'],['uk','Українська']],LOC={ru:'ru',en:'en-GB',kk:'kk',uk:'uk'};
+let lang=localStorage.bk_lang;if(!LANGS.some(l=>l[0]===lang))lang='ru';
+document.documentElement.lang=lang;
+const un=s=>`<span translate="no">${esc(s)}</span>`;
+const plU=(n,a,b,c)=>{const t=n%10,h=n%100;return t===1&&h!==11?a:t>=2&&t<=4&&(h<12||h>14)?b:c};
+/* ключ (русский фрагмент) → [en, kk, uk] */
+const D={
+"Профессия":["Profession","Мамандық","Професія"],"Био":["Bio","Өмірбаян","Біо"],"Здоровье":["Health","Денсаулық","Здоров’я"],"Хобби":["Hobby","Хобби","Хобі"],"Багаж":["Baggage","Жүк","Багаж"],"Факт":["Fact","Дерек","Факт"],
+"Раскрытие карт":["Card reveal","Карталарды ашу","Розкриття карт"],"Обсуждение":["Discussion","Талқылау","Обговорення"],"Голосование":["Voting","Дауыс беру","Голосування"],"Итоги раунда":["Round results","Раунд қорытындысы","Підсумки раунду"],
+"Запуск матча…":["Starting match…","Матч басталуда…","Запуск матчу…"],"Запуск матча":["Match starting","Матчты іске қосу","Запуск матчу"],
+"Связь потеряна. Переподключаемся…":["Connection lost. Reconnecting…","Байланыс үзілді. Қайта қосылудамыз…","Зв’язок втрачено. Перепідключаємося…"],
+"Онлайн":["Online","Онлайн","Онлайн"],"Нет связи":["No connection","Байланыс жоқ","Немає зв’язку"],
+"Чат и события":["Chat and events","Чат және оқиғалар","Чат і події"],"наблюдает":["spectating","бақылап отыр","спостерігає"],
+"Сообщений пока нет.":["No messages yet.","Хабарламалар әзірге жоқ.","Повідомлень поки немає."],"Написать сообщение":["Write a message","Хабарлама жазу","Написати повідомлення"],
+"Сообщение":["Message","Хабарлама","Повідомлення"],"Отправить":["Send","Жіберу","Надіслати"],"Скопировано":["Copied","Көшірілді","Скопійовано"],"Не удалось скопировать":["Could not copy","Көшіру мүмкін болмады","Не вдалося скопіювати"],
+"Главная":["Home","Басты бет","Головна"],"Создать комнату":["Create room","Бөлме құру","Створити кімнату"],"Найти комнату":["Find a room","Бөлме табу","Знайти кімнату"],"Правила игры":["Game rules","Ойын ережелері","Правила гри"],"Настройки":["Settings","Баптаулар","Налаштування"],
+"Создать":["Create","Құру","Створити"],"Найти":["Find","Табу","Знайти"],"Правила":["Rules","Ережелер","Правила"],
+"Игрок":["Player","Ойыншы","Гравець"],"игрок":["player","ойыншы","гравець"],"Привет,":["Hello,","Сәлем,","Привіт,"],"Разделы":["Sections","Бөлімдер","Розділи"],
+"Ведущий":["Host","Жүргізуші","Ведучий"],"Войти по коду":["Join by code","Код арқылы кіру","Увійти за кодом"],"Войти":["Join","Кіру","Увійти"],"Код приглашения":["Invite code","Шақыру коды","Код запрошення"],"Присоединиться":["Join","Қосылу","Приєднатися"],
+"Аватарка":["Avatar","Аватар","Аватарка"],"Нажмите на выбранную, чтобы снять.":["Click the selected one to remove it.","Алу үшін таңдалғанды басыңыз.","Натисніть на вибрану, щоб зняти."],
+"Выберите картинку — её увидят другие игроки.":["Pick a picture — other players will see it.","Суретті таңдаңыз — оны басқа ойыншылар көреді.","Оберіть картинку — її побачать інші гравці."],
+"Выбор аватарки":["Avatar selection","Аватар таңдау","Вибір аватарки"],"Загрузка аватарок…":["Loading avatars…","Аватарлар жүктелуде…","Завантаження аватарок…"],
+"Аватарки не найдены на сервере: положите картинки в папку public/avatars и перезапустите сервер.":["No avatars found on the server: put images into public/avatars and restart the server.","Серверде аватарлар табылмады: суреттерді public/avatars қалтасына салып, серверді қайта іске қосыңыз.","Аватарки на сервері не знайдено: покладіть картинки в папку public/avatars і перезапустіть сервер."],
+"Не удалось загрузить список аватарок. Обновите страницу и убедитесь, что задеплоен актуальный server.js.":["Could not load the avatar list. Refresh the page and make sure the current server.js is deployed.","Аватарлар тізімін жүктеу мүмкін болмады. Бетті жаңартып, server.js ағымдағы нұсқасы орналастырылғанына көз жеткізіңіз.","Не вдалося завантажити список аватарок. Оновіть сторінку й переконайтеся, що розгорнуто актуальний server.js."],
+"Позывной":["Callsign","Лақап ат","Позивний"],"Как вас называть":["What should we call you","Сізді қалай атайық","Як вас називати"],
+"Без позывного вы войдёте как «Игрок».":["Without a callsign you will join as “Player”.","Лақап атсыз сіз «Ойыншы» ретінде кіресіз.","Без позивного ви увійдете як «Гравець»."],
+"Настройте матч, затем отправьте друзьям код или ссылку. Ведущий запускает игру, когда все готовы.":["Set up the match, then send friends the code or link. The host starts the game when everyone is ready.","Матчты баптап, достарыңызға код немесе сілтеме жіберіңіз. Барлығы дайын болғанда жүргізуші ойынды бастайды.","Налаштуйте матч, потім надішліть друзям код або посилання. Ведучий запускає гру, коли всі готові."],
+"мест":["seats","орын","місць"],"Открытые комнаты":["Open rooms","Ашық бөлмелер","Відкриті кімнати"],"Публичных комнат пока нет.":["No public rooms yet.","Ашық бөлмелер әзірге жоқ.","Публічних кімнат поки немає."],
+"Как играть":["How to play","Қалай ойнау керек","Як грати"],
+"Мест в бункере меньше, чем игроков. Каждый раунд раскрывайте по одной карте из досье, обсуждайте и голосуйте за исключение.":["The bunker has fewer seats than there are players. Each round, reveal one card from your dossier, discuss and vote to expel.","Бункердегі орын ойыншылардан аз. Әр раундта досьеден бір картаны ашып, талқылап, шығару үшін дауыс беріңіз.","Місць у бункері менше, ніж гравців. Кожного раунду розкривайте по одній карті з досьє, обговорюйте й голосуйте за виключення."],
+"Все правила":["All rules","Барлық ережелер","Усі правила"],"Обновить":["Refresh","Жаңарту","Оновити"],
+"Открытых комнат нет. Создайте свою и отправьте код друзьям.":["No open rooms. Create your own and send the code to friends.","Ашық бөлмелер жоқ. Өзіңіздікін құрып, кодты достарыңызға жіберіңіз.","Відкритих кімнат немає. Створіть свою й надішліть код друзям."],
+"Досье":["Dossier","Досье","Досьє"],"У каждого игрока 6 скрытых карт:":["Each player has 6 hidden cards:","Әр ойыншының 6 жасырын картасы бар:","У кожного гравця 6 прихованих карт:"],
+"Раунд":["Round","Раунд","Раунд"],
+"60 секунд. Откройте одну карту. В первом раунде это профессия. Не успели — карта откроется сама.":["60 seconds. Reveal one card. In the first round it is the profession. If you run out of time, a card is revealed automatically.","60 секунд. Бір картаны ашыңыз. Бірінші раундта бұл — мамандық. Үлгермесеңіз, карта өзі ашылады.","60 секунд. Розкрийте одну карту. У першому раунді це професія. Не встигли — карта розкриється сама."],
+"Убедите остальных, что место нужно именно вам.":["Convince the others that the seat should be yours.","Орын дәл сізге керек екеніне басқаларды сендіріңіз.","Переконайте інших, що місце потрібне саме вам."],
+"Выберите, кого исключить. Нельзя голосовать за себя, голос отзывать нельзя.":["Choose who to expel. You cannot vote for yourself, and a vote cannot be withdrawn.","Кімді шығару керегін таңдаңыз. Өзіңізге дауыс беруге болмайды, дауысты қайтарып алуға болмайды.","Оберіть, кого виключити. Не можна голосувати за себе, голос відкликати не можна."],
+"Итоги":["Results","Қорытынды","Підсумки"],
+"Больше всех голосов — изгнан. При ничьей 30 секунд обсуждения и переголосование между лидерами; вторая ничья решается жребием.":["The player with the most votes is expelled. On a tie: 30 seconds of discussion and a re-vote between the leaders; a second tie is decided by lot.","Ең көп дауыс алған ойыншы шығарылады. Тең болса: 30 секунд талқылау және көшбасшылар арасында қайта дауыс беру; екінші тең нәтиже жеребемен шешіледі.","Найбільше голосів — виключений. У разі нічиєї: 30 секунд обговорення й переголосування між лідерами; друга нічия вирішується жеребом."],
+"Конец игры":["End of the game","Ойынның соңы","Кінець гри"],
+"Матч идёт, пока не останется столько игроков, сколько мест в бункере. Для старта нужно минимум 4 игрока.":["The match continues until as many players remain as there are seats in the bunker. At least 4 players are needed to start.","Бункердегі орын санына тең ойыншы қалғанша матч жалғасады. Бастау үшін кемінде 4 ойыншы қажет.","Матч триває, доки не залишиться стільки гравців, скільки місць у бункері. Для старту потрібно щонайменше 4 гравці."],
+"Профиль":["Profile","Профиль","Профіль"],"Интерфейс":["Interface","Интерфейс","Інтерфейс"],"Уменьшить анимации":["Reduce animations","Анимацияларды азайту","Зменшити анімації"],
+"Настройка хранится в этом браузере.":["This setting is stored in this browser.","Баптау осы браузерде сақталады.","Налаштування зберігається в цьому браузері."],
+"Язык интерфейса. Тексты карт, катастроф и бункера пока на русском.":["Interface language. Card, disaster and bunker texts are currently in Russian.","Интерфейс тілі. Карталар, апаттар және бункер мәтіндері әзірге орысша.","Мова інтерфейсу. Тексти карт, катастроф і бункера поки що російською."],
+"Язык":["Language","Тіл","Мова"],
+"Игроков":["Players","Ойыншылар","Гравці"],"Мест в бункере":["Bunker seats","Бункердегі орындар","Місць у бункері"],"Меньше игроков":["Fewer players","Ойыншылар азырақ","Менше гравців"],"Больше игроков":["More players","Ойыншылар көбірек","Більше гравців"],
+"Отмена":["Cancel","Бас тарту","Скасувати"],"Играть как":["Play as","Ретінде ойнау","Грати як"],"Позывной меняется в настройках.":["Your callsign can be changed in settings.","Лақап атты баптауларда өзгертуге болады.","Позивний змінюється в налаштуваннях."],
+"Публичная комната":["Public room","Ашық бөлме","Публічна кімната"],
+"Видна в списке «Найти комнату». Иначе вход только по коду.":["Shown in the “Find a room” list. Otherwise entry is by code only.","«Бөлме табу» тізімінде көрінеді. Әйтпесе тек код арқылы кіруге болады.","Видно в списку «Знайти кімнату». Інакше вхід лише за кодом."],
+"Не все игроки готовы":["Not all players are ready","Барлық ойыншы дайын емес","Не всі гравці готові"],
+"Не в сети":["Offline","Желіде емес","Не в мережі"],"В сети":["Online","Желіде","У мережі"],"в сети":["online","желіде","у мережі"],"вы":["you","сіз","ви"],
+"Не готов":["Not ready","Дайын емес","Не готовий"],"Готов":["Ready","Дайын","Готовий"],
+"Передать роль ведущего:":["Make host:","Жүргізушіні тағайындау:","Передати роль ведучого:"],"Сделать ведущим":["Make host","Жүргізуші ету","Зробити ведучим"],"Исключить:":["Remove:","Шығару:","Виключити:"],"Исключить":["Remove","Шығару","Виключити"],
+"Код":["Code","Код","Код"],"Ссылка":["Link","Сілтеме","Посилання"],"Комната":["Room","Бөлме","Кімната"],"Участники":["Participants","Қатысушылар","Учасники"],"Готовы":["Ready","Дайын","Готові"],
+"Доступ":["Access","Қолжетімділік","Доступ"],"Публичная":["Public","Ашық","Публічна"],"По коду":["By code","Код бойынша","За кодом"],
+"Ожидаем игроков":["Waiting for players","Ойыншыларды күтудеміз","Очікуємо гравців"],"Свободное место":["Free seat","Бос орын","Вільне місце"],
+"Начать игру":["Start game","Ойынды бастау","Почати гру"],"Отменить готовность":["Cancel ready","Дайындықты болдырмау","Скасувати готовність"],"Я готов":["I’m ready","Мен дайынмын","Я готовий"],"Покинуть комнату?":["Leave the room?","Бөлмеден шығасыз ба?","Покинути кімнату?"],"Покинуть":["Leave","Шығу","Покинути"],
+"Покинул комнату":["Left the room","Бөлмеден шықты","Покинув кімнату"],"Покинул":["Left","Шықты","Покинув"],"Изгнан:":["Expelled:","Шығарылды:","Виключений:"],"Изгнан":["Expelled","Шығарылды","Виключений"],"Проголосовал":["Voted","Дауыс берді","Проголосував"],"Выбран":["Selected","Таңдалды","Обраний"],
+"Выберите карту из досье, чтобы раскрыть её всем.":["Choose a card from your dossier to reveal it to everyone.","Досьеден картаны таңдап, оны барлығына ашыңыз.","Оберіть карту з досьє, щоб розкрити її всім."],
+"Выберите игрока среди карточек и подтвердите голос внизу.":["Pick a player among the cards and confirm your vote below.","Карточкалардан ойыншыны таңдап, дауысты төменде растаңыз.","Оберіть гравця серед карток і підтвердіть голос унизу."],
+"Выберите игрока, которого хотите исключить.":["Choose the player you want to expel.","Шығарғыңыз келетін ойыншыны таңдаңыз.","Оберіть гравця, якого хочете виключити."],
+"Выберите карту":["Choose a card","Картаны таңдаңыз","Оберіть карту"],"(в 1-м раунде — профессия)":["(in round 1 — profession)","(1-раундта — мамандық)","(у 1-му раунді — професія)"],"затем подтвердите внизу.":["then confirm below.","содан кейін төменде растаңыз.","потім підтвердіть унизу."],
+"Карта раскрыта. Ждём остальных.":["Card revealed. Waiting for the others.","Карта ашылды. Басқаларды күтудеміз.","Карту розкрито. Чекаємо на інших."],
+"Вы выбыли и наблюдаете.":["You are out and are spectating.","Сіз шықтыңыз да, бақылап отырсыз.","Ви вибули й спостерігаєте."],
+"Убедите остальных, что место в бункере нужно именно вам.":["Convince the others that you need the bunker seat.","Бункердегі орын дәл сізге керек екеніне басқаларды сендіріңіз.","Переконайте інших, що місце в бункері потрібне саме вам."],
+"Голос принят. Ждём остальных.":["Vote accepted. Waiting for the others.","Дауыс қабылданды. Басқаларды күтудеміз.","Голос прийнято. Чекаємо на інших."],
+"Ничья. Короткое обсуждение и переголосование между лидерами.":["Tie. Short discussion and a re-vote between the leaders.","Тең нәтиже. Қысқа талқылау және көшбасшылар арасында қайта дауыс беру.","Нічия. Коротке обговорення й переголосування між лідерами."],
+"(жребий)":["(by lot)","(жеребе)","(жереб)"],"Моё досье":["My dossier","Менің досьем","Моє досьє"],"Открыто":["Revealed","Ашық","Відкрито"],"Секретно":["Hidden","Құпия","Таємно"],"Бункер":["Bunker","Бункер","Бункер"],
+"Раскрыть карту":["Reveal card","Картаны ашу","Розкрити карту"],"Голос против:":["Vote against:","Қарсы дауыс:","Голос проти:"],"Изменить его потом нельзя.":["It cannot be changed later.","Оны кейін өзгертуге болмайды.","Змінити його потім не можна."],
+"Подтвердить голос":["Confirm vote","Дауысты растау","Підтвердити голос"],"Вы наблюдаете за игрой.":["You are watching the game.","Сіз ойынды бақылап отырсыз.","Ви спостерігаєте за грою."],
+"Фаза":["Phase","Кезең","Фаза"],"Игроки":["Players","Ойыншылар","Гравці"],"Чат":["Chat","Чат","Чат"],"Осталось / мест":["Left / seats","Қалды / орын","Залишилось / місць"],
+"Выйти из игры":["Leave the game","Ойыннан шығу","Вийти з гри"],"Выйти":["Leave","Шығу","Вийти"],"Игровые разделы":["Game sections","Ойын бөлімдері","Розділи гри"],"Никого.":["Nobody.","Ешкім жоқ.","Нікого."],
+"Матч завершён":["Match finished","Матч аяқталды","Матч завершено"],"Новый матч в лобби":["New match in the lobby","Лоббиде жаңа матч","Новий матч у лобі"],"В главное меню":["To main menu","Басты мәзірге","У головне меню"],
+"Выжившие":["Survivors","Аман қалғандар","Вижилі"],"Не прошли":["Did not make it","Өтпегендер","Не пройшли"],"Состояние бункера":["Bunker status","Бункер жағдайы","Стан бункера"],
+"Комната создана":["Room created","Бөлме құрылды","Кімнату створено"],"Введите код в формате BK-12345":["Enter a code in the format BK-12345","Кодты BK-12345 пішімінде енгізіңіз","Введіть код у форматі BK-12345"],
+"Вы вернётесь в главное меню.":["You will return to the main menu.","Сіз басты мәзірге ораласыз.","Ви повернетесь у головне меню."],
+"Вы будете исключены из матча и не сможете вернуться.":["You will be removed from the match and will not be able to return.","Сіз матчтан шығарыласыз және қайта оралмайсыз.","Вас буде виключено з матчу, і ви не зможете повернутися."],
+"Исключить игрока?":["Remove the player?","Ойыншыны шығарасыз ба?","Виключити гравця?"],"будет убран из комнаты.":["will be removed from the room.","бөлмеден шығарылады.","буде видалено з кімнати."],
+"Передать роль ведущего?":["Transfer the host role?","Жүргізуші рөлін бересіз бе?","Передати роль ведучого?"],"получит управление комнатой.":["will take control of the room.","бөлмені басқаруды алады.","отримає керування кімнатою."],"Передать":["Transfer","Беру","Передати"],
+"ЗАГРУЗКА":["LOADING","ЖҮКТЕЛУДЕ","ЗАВАНТАЖЕННЯ"],"Загрузка":["Loading","Жүктелуде","Завантаження"],
+"Вместимость":["Capacity","Сыйымдылық","Місткість"],"Еда":["Food","Тамақ","Їжа"],"Вода":["Water","Су","Вода"],"Электричество":["Electricity","Электр қуаты","Електрика"],"Медицина":["Medicine","Медицина","Медицина"],"Вентиляция":["Ventilation","Желдету","Вентиляція"],"Автономность":["Autonomy","Автономдылық","Автономність"],"Помещения":["Rooms","Бөлмелер","Приміщення"],
+/* сообщения сервера */
+"Игрок не найден":["Player not found","Ойыншы табылмады","Гравця не знайдено"],"Только ведущий":["Host only","Тек жүргізуші","Лише ведучий"],"Матч уже идёт":["The match is already in progress","Матч қазірдің өзінде жүріп жатыр","Матч уже триває"],
+"Комната заполнена":["The room is full","Бөлме толы","Кімната заповнена"],"Настройки закрыты":["Settings are locked","Баптаулар жабық","Налаштування закриті"],"Только в лобби":["Lobby only","Тек лоббиде","Лише в лобі"],
+"Нельзя исключить себя":["You cannot remove yourself","Өзіңізді шығара алмайсыз","Не можна виключити себе"],"Матч уже начат":["The match has already started","Матч бұрын басталған","Матч уже розпочато"],
+"Нужно минимум 4 игрока":["At least 4 players are required","Кемінде 4 ойыншы қажет","Потрібно щонайменше 4 гравці"],"Сейчас нельзя раскрывать карты":["Cards cannot be revealed right now","Қазір карталарды ашуға болмайды","Зараз не можна розкривати карти"],
+"Вы выбыли":["You are out","Сіз шықтыңыз","Ви вибули"],"В этом раунде карта уже раскрыта":["A card has already been revealed this round","Бұл раундта карта ашылып қойған","У цьому раунді карту вже розкрито"],
+"Недопустимая карта":["Invalid card","Жарамсыз карта","Недопустима карта"],"В первом раунде раскрывается профессия":["In the first round the profession is revealed","Бірінші раундта мамандық ашылады","У першому раунді розкривається професія"],
+"Сейчас не голосование":["It is not voting time","Қазір дауыс беру кезеңі емес","Зараз не голосування"],"Выбывшие не голосуют":["Eliminated players cannot vote","Шыққандар дауыс бермейді","Вибулі гравці не голосують"],
+"Голос уже отдан":["Your vote has already been cast","Дауыс бұрын берілген","Голос уже віддано"],"Нельзя голосовать за себя":["You cannot vote for yourself","Өзіңізге дауыс беруге болмайды","Не можна голосувати за себе"],
+"Недопустимый кандидат":["Invalid candidate","Жарамсыз үміткер","Недопустимий кандидат"],"Матч ещё не завершён":["The match is not finished yet","Матч әлі аяқталған жоқ","Матч ще не завершено"],
+"Слишком часто":["Too fast","Тым жиі","Занадто часто"],"Вы не в комнате":["You are not in a room","Сіз бөлмеде емессіз","Ви не в кімнаті"],"Вы уже в комнате":["You are already in a room","Сіз бөлмеде тұрсыз","Ви вже в кімнаті"],"Комната не найдена":["Room not found","Бөлме табылмады","Кімнату не знайдено"],
+"подключился":["joined","қосылды","приєднався"],"исключён ведущим":["was removed by the host","жүргізуші шығарды","виключений ведучим"],"теперь ведущий":["is now the host","енді жүргізуші","тепер ведучий"],"покинул комнату":["left the room","бөлмеден шықты","покинув кімнату"],"изгнан из бункера":["was expelled from the bunker","бункерден шығарылды","виключений з бункера"]
+};
+const LI={en:0,kk:1,uk:2};
+/* правила со склонением и порядком слов; применяются до словаря */
+const RULES=[
+ [/Бункер вмещает (\S+) игроков, но не меньше одного места\./g,(l,a)=>[`The bunker holds ${a} of players, but at least one seat.`,`Бункер ойыншылардың ${a} сыйдырады, бірақ кемінде бір орын болады.`,`Бункер вміщує ${a} гравців, але не менше одного місця.`][l]],
+ [/Нужно ещё (\d+) игрока/g,(l,n)=>[`Need ${n} more player${n==1?'':'s'}`,`Тағы ${n} ойыншы қажет`,`Потрібно ще ${n} ${plU(+n,'гравець','гравці','гравців')}`][l]],
+ [/Проголосовали (\d+) из (\d+)/g,(l,a,b)=>[`Voted: ${a} of ${b}`,`Дауыс бергендер: ${a} / ${b}`,`Проголосували: ${a} з ${b}`][l]],
+ [/(\d+) игроков/g,(l,n)=>[`${n} player${n==1?'':'s'}`,`${n} ойыншы`,`${n} ${plU(+n,'гравець','гравці','гравців')}`][l]],
+ [/(\d+) комнат(?![А-Яа-яЁё])/g,(l,n)=>[`${n} room${n==1?'':'s'}`,`${n} бөлме`,`${n} ${plU(+n,'кімната','кімнати','кімнат')}`][l]],
+ [/(\d+) в сети/g,(l,n)=>[`${n} online`,`${n} желіде`,`${n} у мережі`][l]],
+ [/(\d+) с(?![А-Яа-яЁё])/g,(l,n)=>[`${n} s`,`${n} с`,`${n} с`][l]],
+ [/(\d+) мин(?![А-Яа-яЁё])/g,(l,n)=>[`${n} min`,`${n} мин`,`${n} хв`][l]]
+];
+const FRAG=new RegExp('(^|[^А-Яа-яЁё])('+Object.keys(D).sort((a,b)=>b.length-a.length).map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')(?![А-Яа-яЁё])','g');
+function tr(s){
+  const l=LI[lang];if(l===undefined||!/[А-Яа-яЁё]/.test(s))return s;
+  const out=[],keep=x=>'\uE000'+(out.push(x)-1)+'\uE001';
+  for(const [re,fn] of RULES)s=s.replace(re,(...m)=>keep(fn(l,...m.slice(1,-2))));
+  s=s.replace(FRAG,(m,pre,k)=>pre+keep(D[k][l]));
+  return s.replace(/\uE000(\d+)\uE001/g,(_,i)=>out[i]);
+}
+window.__tr=tr;
+function trTree(root){
+  if(lang==='ru')return;
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT);let n;
+  while(n=w.nextNode()){
+    if(n.nodeType===3){if(!(n.parentElement&&n.parentElement.closest('[translate=no]')))n.nodeValue=tr(n.nodeValue);continue}
+    if(n.closest('[translate=no]'))continue;
+    for(const a of ['placeholder','aria-label','title','alt']){const v=n.getAttribute(a);if(v)n.setAttribute(a,tr(v))}
+  }
+}
+function setLang(v){if(!LANGS.some(l=>l[0]===v))return;lang=v;try{localStorage.bk_lang=v}catch(e){}document.documentElement.lang=v}
+
+function toast(m,t='dn'){const e=document.createElement('div');e.className='ts '+t;e.textContent=tr(m);$('#toasts').append(e);setTimeout(()=>{e.classList.add('bye');setTimeout(()=>e.remove(),260)},3800)}
 function closeM(after){if(!modal||modal.cl)return;modal.cl=1;render();setTimeout(()=>{modal=null;render();after&&after()},210)}
 const act=(ev,d={},quiet)=>new Promise(r=>socket.emit(ev,d,res=>{if(res&&!res.ok&&!quiet)toast(res.error);r(res||{})}));
 socket.on('connect',()=>{conn=true;listRooms();render()});
@@ -232,7 +361,7 @@ function render(){
   document.documentElement.classList.toggle('reduce',calm);
   const t=document.createElement('div');
   t.innerHTML=(!S?menu():(S.phase==='LOBBY'||S.phase==='STARTING')?lobby():S.phase==='FINISHED'?final():game())+(modal?mdl():'');
-  morph(app,t);$('#offl').innerHTML=conn?'':'<div class="off gl" role="alert">Связь потеряна. Переподключаемся…</div>';
+  trTree(t);morph(app,t);$('#offl').innerHTML=conn?'':tr('<div class="off gl" role="alert">Связь потеряна. Переподключаемся…</div>');
   app.querySelectorAll('.log').forEach((l,i)=>{if(logs[i]!==false)l.scrollTop=l.scrollHeight});
   if(S){S.players.forEach(p=>Object.keys(p.revealed).forEach(k=>seenR.add(p.id+k)));seenOn=true}else seenOn=false;
   const sk=S?S.phase:view;if(sk!==render.sk){render.sk=sk;window.__wave&&window.__wave.boost()}
@@ -248,10 +377,10 @@ const av=(p,c='')=>{const k=p.avatar||'';return `<span class="av ${c}" data-k="$
 const saveAvatar=id=>{avatar=id;try{localStorage.bk_avatar=id}catch(e){}if(S)act('profile:avatar',{avatar:id||null},1)};
 fetch('/avatars/index.json').then(r=>r.json()).then(l=>{avList=l;avState=l.length?'ok':'empty';if(avatar&&!l.includes(avatar))saveAvatar('');render()}).catch(()=>{avState='err';render()});
 const stat=()=>`<span class="bd ${conn?'ok':'dn'}" data-scr="${conn}"><span class="dot ${conn?'on':''}"></span>${conn?'Онлайн':'Нет связи'}</span>`;
-const kv=(k,v)=>`<div class="kv"><span>${k}</span><span>${esc(v)}</span></div>`;
+const kv=(k,v,raw)=>`<div class="kv"><span>${k}</span><span${raw?' translate="no"':''}>${esc(v)}</span></div>`;
 const seatsFor=(n,p)=>Math.max(1,Math.min(n-1,Math.round(n*p/100)));
 const normCode=v=>{const m=String(v).match(/(?:BK)?[-\s]?(\d{5})/i);return m?'BK-'+m[1]:''};
-function chatBox(){return `<div class="log" role="log" aria-label="Чат и события">${S.chat.map(m=>m.sys?`<div class="m sys">${esc(m.text)}</div>`:`<div class="m ${m.out?'o':''}">${av({id:m.id,name:m.name,avatar:(S.players.find(x=>x.id===m.id)||{avatar:m.av}).avatar},'s')}<div><b>${esc(m.name)}</b>${m.out?' <small>(наблюдает)</small>':''}${m.t?`<time>${new Date(m.t).toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'})}</time>`:''}<br>${esc(m.text)}</div></div>`).join('')||'<small>Сообщений пока нет.</small>'}</div>
+function chatBox(){return `<div class="log" role="log" aria-label="Чат и события">${S.chat.map(m=>m.sys?`<div class="m sys">${esc(m.text)}</div>`:`<div class="m ${m.out?'o':''}">${av({id:m.id,name:m.name,avatar:(S.players.find(x=>x.id===m.id)||{avatar:m.av}).avatar},'s')}<div><b translate="no">${esc(m.name)}</b>${m.out?' <small>(наблюдает)</small>':''}${m.t?`<time>${new Date(m.t).toLocaleTimeString(LOC[lang]||'ru',{hour:'2-digit',minute:'2-digit'})}</time>`:''}<br><span translate="no">${esc(m.text)}</span></div></div>`).join('')||'<small>Сообщений пока нет.</small>'}</div>
 <form class="row" data-f="chat" style="flex-wrap:nowrap"><input id="msg" maxlength="300" placeholder="Написать сообщение" aria-label="Сообщение" autocomplete="off"><button class="ib" aria-label="Отправить">${ic('send')}</button></form>`}
 const copy=t=>navigator.clipboard?.writeText(t).then(()=>toast('Скопировано','ok'),()=>toast('Не удалось скопировать'));
 function ask(title,text,ok,fn){modal={t:'c',title,text,ok,fn};focusM=true;render()}
@@ -276,7 +405,7 @@ function menu(){let b='';
   else if(view==='rules')b=`<header class="hd"><h1>Правила игры</h1></header><section class="card"><h3>Досье</h3><p class="t2">У каждого игрока 6 скрытых карт: ${KEYS.map(k=>LBL[k]).join(', ')}. Бункер вмещает ${PCT[0]}–${PCT[3]}% игроков, но не меньше одного места.</p></section>
 <section class="card"><h3>Раунд</h3>${[['Раскрытие карт','60 секунд. Откройте одну карту. В первом раунде это профессия. Не успели — карта откроется сама.'],['Обсуждение','Убедите остальных, что место нужно именно вам.'],['Голосование','Выберите, кого исключить. Нельзя голосовать за себя, голос отзывать нельзя.'],['Итоги','Больше всех голосов — изгнан. При ничьей 30 секунд обсуждения и переголосование между лидерами; вторая ничья решается жребием.']].map((x,i)=>`<div class="li"><span class="code" style="width:20px">${i+1}</span><div><b>${x[0]}</b><br><small>${x[1]}</small></div></div>`).join('')}</section>
 <section class="card"><h3>Конец игры</h3><p class="t2">Матч идёт, пока не останется столько игроков, сколько мест в бункере. Для старта нужно минимум 4 игрока.</p></section>`;
-  else b=`<header class="hd"><h1>Настройки</h1>${stat()}</header><section class="card"><h3>Профиль</h3>${callsign()}${avatarPicker()}</section><section class="card"><h3>Интерфейс</h3><label class="ck"><input type="checkbox" data-c="calm" ${calm?'checked':''}>Уменьшить анимации</label><small>Настройка хранится в этом браузере.</small></section><small>BUNKER v0.1</small>`;
+  else b=`<header class="hd"><h1>Настройки</h1>${stat()}</header><section class="card"><h3>Профиль</h3>${callsign()}${avatarPicker()}</section><section class="card"><h3>Интерфейс</h3><label class="ck"><input type="checkbox" data-c="calm" ${calm?'checked':''}>Уменьшить анимации</label><small>Настройка хранится в этом браузере.</small></section><section class="card"><h3>Язык</h3><div class="sg" role="radiogroup" aria-label="Язык" style="flex-wrap:wrap">${LANGS.map(([c,n])=>`<button type="button" role="radio" aria-checked="${c===lang}" class="${c===lang?'on':''}" data-a="lang" data-v="${c}" translate="no" lang="${c}" style="flex:1 1 45%">${n}</button>`).join('')}</div><small>Язык интерфейса. Тексты карт, катастроф и бункера пока на русском.</small></section><small>BUNKER v0.1</small>`;
   return `<div class="shell" data-scr="menu">${sidebar()}<main class="pg scr" data-scr="${view}">${b}</main></div>`}
 const dur=x=>x<60?x+' с':x/60+' мин',FM={max:x=>x,pct,discuss:dur,vote:dur},LV={max:'Игроков',pct:'Мест в бункере',discuss:'Обсуждение',vote:'Голосование'},AR={pct:PCT,discuss:DIS,vote:VOT};
 const ctl=(k,val,m)=>`<div class="ct2" role="group" aria-label="${LV[k]}"><span>${LV[k]}</span>${k==='max'?`<div class="stp"><button type="button" class="ib" data-a="${m}" data-v="max:${val-1}" aria-label="Меньше игроков" ${val<=4?'disabled':''}>−</button><b class="np" data-scr="${val}" aria-live="polite">${val}</b><button type="button" class="ib" data-a="${m}" data-v="max:${val+1}" aria-label="Больше игроков" ${val>=12?'disabled':''}>+</button></div>`:`<div class="sg" role="radiogroup">${AR[k].map(x=>`<button type="button" role="radio" aria-checked="${x==val}" class="${x==val?'on':''}" data-a="${m}" data-v="${k}:${x}">${FM[k](x)}</button>`).join('')}</div>`}</div>`;
@@ -292,7 +421,7 @@ function lobby(){
   const h=S.hostId===S.me.id,st=S.phase==='STARTING',s=S.settings,P=S.players,me=P.find(p=>p.id===S.me.id),rd=P.filter(p=>p.ready).length;
   const sel=(k,arr,f)=>h?`<select data-s="${k}" aria-label="${k}">${opts(arr,s[k],f)}</select>`:esc(f?f(s[k]):s[k]);
   const lack=P.length<4?`Нужно ещё ${4-P.length} игрока`:P.some(p=>!p.ready)?'Не все игроки готовы':'',cant=st||!!lack;
-  const card=p=>`<div class="pc ${p.connected?'':'off'}">${av(p)}<div class="pi"><b>${esc(p.name)}</b><small>${p.connected?'В сети':'Не в сети'}${p.id===S.me.id?' · <i>вы</i>':''}</small></div><span class="bd ${p.id===S.hostId?'ac':p.ready?'ok':''}" data-scr="${p.id===S.hostId?'h':p.ready}">${p.id===S.hostId?'Ведущий':p.ready?'Готов':'Не готов'}</span>${h&&p.id!==S.me.id?`<button class="ib" data-a="xfer" data-v="${p.id}" aria-label="Передать роль ведущего: ${esc(p.name)}" title="Сделать ведущим">${ic('crown')}</button><button class="ib dg" data-a="kick" data-v="${p.id}" aria-label="Исключить: ${esc(p.name)}" title="Исключить">${ic('x')}</button>`:''}</div>`;
+  const card=p=>`<div class="pc ${p.connected?'':'off'}">${av(p)}<div class="pi"><b translate="no">${esc(p.name)}</b><small>${p.connected?'В сети':'Не в сети'}${p.id===S.me.id?' · <i>вы</i>':''}</small></div><span class="bd ${p.id===S.hostId?'ac':p.ready?'ok':''}" data-scr="${p.id===S.hostId?'h':p.ready}">${p.id===S.hostId?'Ведущий':p.ready?'Готов':'Не готов'}</span>${h&&p.id!==S.me.id?`<button class="ib" data-a="xfer" data-v="${p.id}" aria-label="Передать роль ведущего: ${esc(p.name)}" title="Сделать ведущим">${ic('crown')}</button><button class="ib dg" data-a="kick" data-v="${p.id}" aria-label="Исключить: ${esc(p.name)}" title="Исключить">${ic('x')}</button>`:''}</div>`;
   return `<div class="${st?'open':''}" data-scr="lobby"><div class="top gl"><span class="logo" style="padding:0">BUNKER</span><span class="code">${S.code}</span><span class="grow"></span><button class="btn sm" data-a="copyCode">${ic('copy')}Код</button><button class="btn sm" data-a="copyLink">${ic('link')}Ссылка</button>${stat()}</div>
 <div class="lb"><aside class="gl pnl lf"><h3>Комната</h3>${kv('Участники',P.length+'/'+s.max)}${kv('Готовы',rd+'/'+P.length)}${kv('Мест в бункере',seatsFor(P.length,s.pct))}<h3 style="margin-top:6px">Настройки</h3>
 <div class="stk">${['max','pct','discuss','vote'].map(k=>h?ctl(k,s[k],'sets'):kv(LV[k],FM[k](s[k]))).join('')}</div>
@@ -306,19 +435,19 @@ ${h?`<label class="ck"><input type="checkbox" data-s="isPublic" ${s.isPublic?'ch
 const canVote=p=>S.phase==='VOTE'&&S.me.alive&&!S.me.voted&&S.candidates.includes(p.id)&&p.id!==S.me.id;
 function gcard(p){const out=!p.alive,pick=canVote(p),st=out?(p.left?'Покинул':'Изгнан'):p.voted?'Проголосовал':'';
   return `<div class="gp ${pick?'pick':''} ${sel===p.id?'sel':''} ${out?'out':''} ${p.id===S.me.id?'mine':''}" ${pick?`role="button" tabindex="0" aria-pressed="${sel===p.id}" data-a="pickV" data-v="${p.id}"`:''}>
-<div class="row" style="flex-wrap:nowrap">${av(p)}<div class="grow" style="min-width:0"><b>${esc(p.name)}</b>${p.id===S.me.id?' <small>(вы)</small>':''}<br><small><span class="dot ${p.connected?'on':''}" style="display:inline-block"></span> ${p.connected?'В сети':'Не в сети'}</small></div>${st?`<span class="bd ${out?'dn':'ok'}" data-scr="${st}">${st}</span>`:''}${sel===p.id?`<span class="bd ac">${ic('check')}Выбран</span>`:''}</div>
-${KEYS.map(k=>`<div class="tr ${p.revealed[k]&&seenOn&&!seenR.has(p.id+k)?'rv':''}"><span class="tc">${ic(k)}${LBL[k]}</span>${p.revealed[k]?`<span>${esc(p.revealed[k])}</span>`:`<span class="hid">${ic('lock')}</span>`}</div>`).join('')}</div>`}
+<div class="row" style="flex-wrap:nowrap">${av(p)}<div class="grow" style="min-width:0"><b translate="no">${esc(p.name)}</b>${p.id===S.me.id?' <small>(вы)</small>':''}<br><small><span class="dot ${p.connected?'on':''}" style="display:inline-block"></span> ${p.connected?'В сети':'Не в сети'}</small></div>${st?`<span class="bd ${out?'dn':'ok'}" data-scr="${st}">${st}</span>`:''}${sel===p.id?`<span class="bd ac">${ic('check')}Выбран</span>`:''}</div>
+${KEYS.map(k=>`<div class="tr ${p.revealed[k]&&seenOn&&!seenR.has(p.id+k)?'rv':''}"><span class="tc">${ic(k)}${LBL[k]}</span>${p.revealed[k]?`<span translate="no">${esc(p.revealed[k])}</span>`:`<span class="hid">${ic('lock')}</span>`}</div>`).join('')}</div>`}
 function phasePanel(){const ph=S.phase,me=S.me,c=S.catastrophe;let h='';
-  if(ph==='REVEAL')h=me.canReveal?`<p class="t2">Выберите карту${S.round===1?' (в 1-м раунде — профессия)':''}, затем подтвердите внизу.</p><div class="pcs">${KEYS.filter(k=>!me.revealed.includes(k)).map(k=>`<button class="tile ${sel===k?'sel':''}" data-a="pickR" data-v="${k}" aria-pressed="${sel===k}" ${S.round===1&&k!=='profession'?'disabled':''}><small>${LBL[k]}</small><b>${esc(me.cards[k])}</b></button>`).join('')}</div>`:`<p class="t2">${me.alive?'Карта раскрыта. Ждём остальных.':'Вы выбыли и наблюдаете.'}</p>`;
+  if(ph==='REVEAL')h=me.canReveal?`<p class="t2">Выберите карту${S.round===1?' (в 1-м раунде — профессия)':''}, затем подтвердите внизу.</p><div class="pcs">${KEYS.filter(k=>!me.revealed.includes(k)).map(k=>`<button class="tile ${sel===k?'sel':''}" data-a="pickR" data-v="${k}" aria-pressed="${sel===k}" ${S.round===1&&k!=='profession'?'disabled':''}><small>${LBL[k]}</small><b translate="no">${esc(me.cards[k])}</b></button>`).join('')}</div>`:`<p class="t2">${me.alive?'Карта раскрыта. Ждём остальных.':'Вы выбыли и наблюдаете.'}</p>`;
   else if(ph==='DISCUSS')h='<p class="t2">Убедите остальных, что место в бункере нужно именно вам.</p>';
   else if(ph==='VOTE'){const a=S.players.filter(p=>p.alive&&p.connected);h=`<p class="t2">${!me.alive?'Вы выбыли и наблюдаете.':me.voted?'Голос принят. Ждём остальных.':'Выберите игрока среди карточек и подтвердите голос внизу.'}</p><small>Проголосовали ${a.filter(p=>p.voted).length} из ${a.length}</small>`}
-  else if(ph==='RESULT'){const r=S.lastResult,mx=Math.max(1,...r.tally.map(t=>t.votes));h=r.tally.map(t=>`<div class="row" style="flex-wrap:nowrap"><span style="width:110px;overflow:hidden;text-overflow:ellipsis">${esc(t.name)}</span><div class="bar"><i style="width:${t.votes/mx*100}%"></i></div><b>${t.votes}</b></div>`).join('')+`<p class="${r.tie?'':'err'}" style="${r.tie?'color:var(--wa)':''}">${r.tie?'Ничья. Короткое обсуждение и переголосование между лидерами.':'Изгнан: '+esc(r.exiledName)+(r.random?' (жребий)':'')}</p>`}
-  return `<h2 class="px" style="font-size:19px">${PH[ph]||ph}</h2>${h}<div class="card" style="background:rgba(255,255,255,.03)"><b style="color:var(--wa)">${esc(c.title)}</b><span class="t2">${esc(c.text)}</span></div>`}
-function dossier(){const me=S.me;return `<h3>Моё досье</h3>${me.cards?KEYS.map(k=>{const o=me.revealed.includes(k);return `<div class="tr" style="display:flex;justify-content:space-between;gap:10px;font-size:13px;border-top:1px solid var(--ln);padding-top:6px"><span class="t2">${LBL[k]}<br><span class="bd ${o?'ok':''}" style="height:18px;font-size:11px">${o?'Открыто':'Секретно'}</span></span><b style="text-align:right">${esc(me.cards[k])}</b></div>`}).join(''):''}
-<h3 style="margin-top:6px">Бункер</h3>${Object.entries(S.bunker).map(([k,v])=>kv(k,v)).join('')}`}
+  else if(ph==='RESULT'){const r=S.lastResult,mx=Math.max(1,...r.tally.map(t=>t.votes));h=r.tally.map(t=>`<div class="row" style="flex-wrap:nowrap"><span style="width:110px;overflow:hidden;text-overflow:ellipsis" translate="no">${esc(t.name)}</span><div class="bar"><i style="width:${t.votes/mx*100}%"></i></div><b>${t.votes}</b></div>`).join('')+`<p class="${r.tie?'':'err'}" style="${r.tie?'color:var(--wa)':''}">${r.tie?'Ничья. Короткое обсуждение и переголосование между лидерами.':'Изгнан: '+un(r.exiledName)+(r.random?' (жребий)':'')}</p>`}
+  return `<h2 class="px" style="font-size:19px">${PH[ph]||ph}</h2>${h}<div class="card" style="background:rgba(255,255,255,.03)"><b style="color:var(--wa)" translate="no">${esc(c.title)}</b><span class="t2" translate="no">${esc(c.text)}</span></div>`}
+function dossier(){const me=S.me;return `<h3>Моё досье</h3>${me.cards?KEYS.map(k=>{const o=me.revealed.includes(k);return `<div class="tr" style="display:flex;justify-content:space-between;gap:10px;font-size:13px;border-top:1px solid var(--ln);padding-top:6px"><span class="t2">${LBL[k]}<br><span class="bd ${o?'ok':''}" style="height:18px;font-size:11px">${o?'Открыто':'Секретно'}</span></span><b style="text-align:right" translate="no">${esc(me.cards[k])}</b></div>`}).join(''):''}
+<h3 style="margin-top:6px">Бункер</h3>${Object.entries(S.bunker).map(([k,v])=>kv(k,v,1)).join('')}`}
 function actions(){const ph=S.phase,me=S.me;
-  if(ph==='REVEAL'&&me.canReveal)return sel?`<span class="grow">Раскрыть карту «${LBL[sel]}»: <b>${esc(me.cards[sel])}</b></span><button class="btn" data-a="cancel">Отмена</button><button class="btn pr" data-a="doReveal">Раскрыть карту</button>`:'<span class="t2">Выберите карту из досье, чтобы раскрыть её всем.</span>';
-  if(ph==='VOTE'&&me.alive&&!me.voted){const t=sel&&S.players.find(p=>p.id===sel);return t?`<span class="grow">Голос против: <b>${esc(t.name)}</b>. Изменить его потом нельзя.</span><button class="btn" data-a="cancel">Отмена</button><button class="btn dg" data-a="doVote">Подтвердить голос</button>`:'<span class="t2">Выберите игрока, которого хотите исключить.</span>'}
+  if(ph==='REVEAL'&&me.canReveal)return sel?`<span class="grow">Раскрыть карту «${LBL[sel]}»: <b translate="no">${esc(me.cards[sel])}</b></span><button class="btn" data-a="cancel">Отмена</button><button class="btn pr" data-a="doReveal">Раскрыть карту</button>`:'<span class="t2">Выберите карту из досье, чтобы раскрыть её всем.</span>';
+  if(ph==='VOTE'&&me.alive&&!me.voted){const t=sel&&S.players.find(p=>p.id===sel);return t?`<span class="grow">Голос против: <b translate="no">${esc(t.name)}</b>. Изменить его потом нельзя.</span><button class="btn" data-a="cancel">Отмена</button><button class="btn dg" data-a="doVote">Подтвердить голос</button>`:'<span class="t2">Выберите игрока, которого хотите исключить.</span>'}
   return `<span class="t2">${!me.alive?'Вы наблюдаете за игрой.':PH[ph]||''}</span>`}
 function game(){const A=S.players.filter(p=>p.alive).length,T=[['game','Фаза'],['players','Игроки'],['dos','Досье'],['chat','Чат']],sh=k=>tab===k?'show':'';
   return `<div class="gm" data-scr="game"><header class="top gl"><span class="code">${S.code}</span><span class="px np" style="font-size:15px" data-scr="${S.round}">Раунд ${S.round}</span><b class="tm px">${tm()}</b><div class="stat"><small>Осталось / мест</small><b class="np" data-scr="${A}/${S.seats}">${A} / ${S.seats}</b></div><span class="bd wa" data-scr="${S.phase}">${PH[S.phase]||S.phase}</span><span class="grow"></span>${stat()}<button class="ib dg" data-a="leave" aria-label="Выйти из игры" title="Выйти">${ic('exit')}</button></header>
@@ -330,12 +459,12 @@ function game(){const A=S.players.filter(p=>p.alive).length,T=[['game','Фаза
 function final(){const h=S.hostId===S.me.id,w=S.players.filter(p=>p.alive),l=S.players.filter(p=>!p.alive);
   const blk=(a,c,t)=>`<section class="gl pnl"><div class="row"><h3 class="grow">${t}</h3><span class="bd ${c}">${a.length}</span></div><div class="gcs" style="grid-template-columns:1fr">${a.map(gcard).join('')||'<small>Никого.</small>'}</div></section>`;
   return `<div data-scr="final"><div class="top gl"><span class="logo" style="padding:0">BUNKER</span><span class="code">${S.code}</span><span class="grow"></span><span class="bd">Матч завершён</span>${stat()}</div>
-<div class="lb" style="grid-template-columns:1fr 1fr 320px"><section class="gl pnl" style="grid-column:1/3"><h2 style="color:var(--wa)">${esc(S.catastrophe.title)}</h2><p class="t2">${esc(S.catastrophe.text)}</p><div class="row">${h?'<button class="btn pr" data-a="rematch">Новый матч в лобби</button>':''}<button class="btn dg" data-a="leave2">В главное меню</button></div></section>
-<aside class="gl pnl rt" style="grid-row:1/4;grid-column:3"><h3>Чат и события</h3>${chatBox()}</aside>${blk(w,'ok','Выжившие')}${blk(l,'dn','Не прошли')}<section class="gl pnl" style="grid-column:1/3"><h3>Состояние бункера</h3>${Object.entries(S.bunker).map(([k,v])=>kv(k,v)).join('')}</section></div></div>`}
+<div class="lb" style="grid-template-columns:1fr 1fr 320px"><section class="gl pnl" style="grid-column:1/3"><h2 style="color:var(--wa)" translate="no">${esc(S.catastrophe.title)}</h2><p class="t2" translate="no">${esc(S.catastrophe.text)}</p><div class="row">${h?'<button class="btn pr" data-a="rematch">Новый матч в лобби</button>':''}<button class="btn dg" data-a="leave2">В главное меню</button></div></section>
+<aside class="gl pnl rt" style="grid-row:1/4;grid-column:3"><h3>Чат и события</h3>${chatBox()}</aside>${blk(w,'ok','Выжившие')}${blk(l,'dn','Не прошли')}<section class="gl pnl" style="grid-column:1/3"><h3>Состояние бункера</h3>${Object.entries(S.bunker).map(([k,v])=>kv(k,v,1)).join('')}</section></div></div>`}
 
 /* ---- actions ---- */
 const A={
-  avatar:v=>saveAvatar(avatar===v?'':v),
+  avatar:v=>saveAvatar(avatar===v?'':v),lang:v=>setLang(v),
   nav:v=>{view=v;joinErr=''},create:()=>{modal={t:'m'};focusM=true},close:()=>closeM(),yes:()=>closeM(modal.fn),refresh:()=>listRooms(),
   async doCreate(){busy='create';render();const r=await act('room:create',{name,settings:cfg,avatar});busy='';if(r.ok){modal=null;toast('Комната создана','ok')}render()},
   async join(c){const code=normCode(c);if(!code){joinErr='Введите код в формате BK-12345';return render()}busy='join';render();const r=await act('room:join',{name,code,avatar},1);busy='';joinErr=r.ok?'':r.error;if(!r.ok)toast(r.error);render()},
@@ -353,7 +482,7 @@ document.addEventListener('click',e=>{if(e.target.closest('[data-a]')&&window.__
   const r=A[t.dataset.a];if(r){const p=r(t.dataset.v,t);if(!(p instanceof Promise))render()}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal)closeM();
   if((e.key==='Enter'||e.key===' ')&&e.target.matches('[role=button][data-a]')){e.preventDefault();e.target.click()}});
-document.addEventListener('input',e=>{const b=e.target.dataset.b;if(b==='name'){name=e.target.value;localStorage.bk_name=name;document.querySelectorAll('h1').forEach(h=>h.firstChild&&(h.firstChild.nodeValue='Привет, '+(name||'игрок')))}if(b==='code'){codeVal=e.target.value;if(joinErr){joinErr='';render()}}});
+document.addEventListener('input',e=>{const b=e.target.dataset.b;if(b==='name'){name=e.target.value;localStorage.bk_name=name;document.querySelectorAll('h1').forEach(h=>h.firstChild&&(h.firstChild.nodeValue=tr('Привет, '+(name||'игрок'))))}if(b==='code'){codeVal=e.target.value;if(joinErr){joinErr='';render()}}});
 document.addEventListener('change',e=>{const t=e.target,v=t.type==='checkbox'?t.checked:+t.value;
   if(t.dataset.c==='calm'){calm=v;localStorage.bk_calm=v?'1':'0';render()}else if(t.dataset.c){cfg[t.dataset.c]=v;render()}
   else if(t.dataset.s)act('room:settings',{...S.settings,[t.dataset.s]:v})});
@@ -506,8 +635,8 @@ function initGL(cv,lay){
 function open(mode,o={}){
  if(cur)return cur;
  const el=D.createElement('div');el.className='sp '+mode+(mode==='start'?' sp-pre':'');
- el.setAttribute('role','status');el.setAttribute('aria-label','Загрузка');
- el.innerHTML='<canvas aria-hidden="true"></canvas><div class="sp-fb" aria-hidden="true"><i></i></div><div class="sp-tt"><b>ЗАГРУЗКА</b></div><div class="sp-in"><span class="sp-s">'+(mode==='start'?'DEPLOYING BUNKER...':'INITIALIZING SYSTEM...')+'</span><span class="sp-p" aria-hidden="true">0%</span></div>';
+ el.setAttribute('role','status');el.setAttribute('aria-label',window.__tr?__tr('Загрузка'):'Загрузка');
+ el.innerHTML='<canvas aria-hidden="true"></canvas><div class="sp-fb" aria-hidden="true"><i></i></div><div class="sp-tt"><b>'+(window.__tr?__tr('ЗАГРУЗКА'):'ЗАГРУЗКА')+'</b></div><div class="sp-in"><span class="sp-s">'+(mode==='start'?'DEPLOYING BUNKER...':'INITIALIZING SYSTEM...')+'</span><span class="sp-p" aria-hidden="true">0%</span></div>';
  D.body.append(el);
  if(mode==='boot'){const c0=D.getElementById('sp0');c0&&c0.remove()}else requestAnimationFrame(()=>el.classList.remove('sp-pre'));
  const sS=el.querySelector('.sp-s'),sP=el.querySelector('.sp-p'),fb=el.querySelector('.sp-fb i');

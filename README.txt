@@ -1,17 +1,6 @@
-BUNKER — online multiplayer game
-
-Files:
-- server.js — Socket.IO server and game logic (serves index.html)
-- index.html — the whole client (HTML, CSS, JS)
-- avatars.json — все аватарки одним файлом ({id: base64-jpeg}); если его нет, сервер ищет картинки в public/avatars/
-- package.json — dependencies and start command
-
-Run locally:
-1. Install Node.js 18 or newer.
-2. Open terminal in this folder.
-3. Run: npm install
-4. Run: npm start
-5. Open: http://localhost:3000
-
-For Railway deployment, upload this folder to a GitHub repository and deploy that repository.
-The app must listen on the PORT environment variable provided by the hosting platform.
+Положите сюда файл шрифта Ethnocentric с одним из имён:
+  ethnocentric.woff2 (лучше всего), ethnocentric.woff, ethnocentric.otf или ethnocentric.ttf
+Сервер отдаёт его по адресу /fonts/<имя>, сайт подхватит автоматически.
+Пока файла нет, используется запасной шрифт Onest.
+Важно: в Ethnocentric нет кириллицы, поэтому русские, казахские и украинские буквы рисуются запасным шрифтом.
+Лицензию Ethnocentric проверьте на странице автора (Typodermic) перед публикацией сайта.

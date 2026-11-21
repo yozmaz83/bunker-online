@@ -1110,6 +1110,17 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8' });
     return res.end('ok');
   }
+  if (req.url.startsWith('/fonts/')) { // шрифт Ethnocentric: положите файл в папку fonts/ (ethnocentric.woff2 / .woff / .otf / .ttf)
+    const f = decodeURIComponent(req.url.slice(7).split('?')[0]).toLowerCase();
+    const FONT_TYPES = { 'ethnocentric.woff2': 'font/woff2', 'ethnocentric.woff': 'font/woff', 'ethnocentric.otf': 'font/otf', 'ethnocentric.ttf': 'font/ttf' };
+    const file = FONT_TYPES[f] && new URL('./fonts/' + f, import.meta.url);
+    if (file && existsSync(file)) {
+      res.writeHead(200, { 'content-type': FONT_TYPES[f], 'cache-control': 'public, max-age=604800' });
+      return res.end(readFileSync(file));
+    }
+    res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' });
+    return res.end('not found');
+  }
   if (req.url.startsWith('/avatars/')) {
     const id = decodeURIComponent(req.url.slice(9).split('?')[0]).replace(/\.(jpe?g|png|webp)$/i, '');
     if (id === 'index.json') {
