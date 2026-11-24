@@ -209,6 +209,16 @@ h1,h2,h3,.logo,.px,.sp-tt b{font-family:var(--h)}
 .lqs[data-open=false] .mt{max-height:0;transform:translate(0,6px)}
 .lqs .logo .fx{font-family:var(--px)}
 .kb{font:600 11px var(--f);padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.1)}
+
+@media(max-width:900px){
+.lqmn{overflow:visible}
+.lqm{position:absolute;inset:0;z-index:0;pointer-events:none}
+.lqm svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.lqm rect,.lqm path{fill:var(--lqc,#BFE0FF)}
+.lqmn button{position:relative;z-index:1;background:none;transition:color .3s ease .05s,transform .1s}
+.lqmn button:active{transform:scale(.94)}
+.lqmn button[aria-current=page]{background:none;color:var(--lqf,#04101C)}
+}
 #lqtip{position:fixed;z-index:30;padding:6px 10px;border-radius:8px;background:rgba(8,10,15,.92);border:1px solid var(--ln);color:var(--tx);font:600 12px var(--f);white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-6px,-50%);transition:opacity .12s var(--e),transform .12s var(--e)}
 #lqtip.on{opacity:1;transform:translate(0,-50%);transition:opacity .18s var(--e) .15s,transform .18s var(--e) .15s}
 </style></head>
@@ -423,7 +433,7 @@ function render(){
   document.documentElement.classList.toggle('reduce',calm);
   const t=document.createElement('div');
   t.innerHTML=(!S?menu():(S.phase==='LOBBY'||S.phase==='STARTING')?lobby():S.phase==='FINISHED'?final():game())+(modal?mdl():'');
-  trTree(t);morph(app,t);LQ.sync();$('#offl').innerHTML=conn?'':tr('<div class="off gl" role="alert">Связь потеряна. Переподключаемся…</div>');
+  trTree(t);morph(app,t);LQ.sync();LQM.sync();$('#offl').innerHTML=conn?'':tr('<div class="off gl" role="alert">Связь потеряна. Переподключаемся…</div>');
   app.querySelectorAll('.log').forEach((l,i)=>{if(logs[i]!==false)l.scrollTop=l.scrollHeight});
   if(S){S.players.forEach(p=>Object.keys(p.revealed).forEach(k=>seenR.add(p.id+k)));seenOn=true}else seenOn=false;
   const sk=S?S.phase:view;if(sk!==render.sk){render.sk=sk;window.__wave&&window.__wave.boost()}
@@ -515,11 +525,44 @@ const LQ=(()=>{
       e.preventDefault();const l=[...document.querySelectorAll('.lqs .nav')],i=l.indexOf(e.target.closest('.nav'));
       l[(i+(e.key==='ArrowDown'?1:-1)+l.length)%l.length].focus()}});
   return api})();
+/* ---- LQM: «жидкая» вкладка нижней панели (телефон) ----
+   Тот же приём, повёрнутый на 90°: «рейка» — светлая полоса внизу панели, вкладка вырастает из неё вверх
+   с вогнутыми дугами у основания. Две пружины — левый и правый край, ведущий край жёстче (капля). */
+const LQM=(()=>{
+  const R=14,r=16,UP=12,IN=6;
+  const still=()=>matchMedia('(prefers-reduced-motion: reduce)').matches||document.documentElement.classList.contains('reduce');
+  let host=null,pth=null,rl=null,id='',L=0,Rt=0,tL=0,tR=0,vL=0,vR=0,w=60,T=-UP,base=54,rt=false,raf=0,last=0;
+  const d=()=>{const Re=Math.max(Rt,L+2*r+2),Rr=R+Math.min(Math.max(0,Re-L-w)*.25,14);
+    return `M${L-Rr} ${base}A${Rr} ${Rr} 0 0 0 ${L} ${base-Rr}V${T+r}A${r} ${r} 0 0 1 ${L+r} ${T}H${Re-r}A${r} ${r} 0 0 1 ${Re} ${T+r}V${base-Rr}A${Rr} ${Rr} 0 0 0 ${Re+Rr} ${base}V${base+2}H${L-Rr}Z`};
+  const draw=()=>{pth&&pth.setAttribute('d',d());rl&&rl.setAttribute('y',base)};
+  function step(now){
+    const dt=Math.min(.02,(now-last)/1000||.016);last=now;
+    const kL=rt?210:420,cL=rt?22:25,kR=rt?420:210,cR=rt?25:22;      // вправо: правый край ведёт, левый отстаёт
+    vL+=(-kL*(L-tL)-cL*vL)*dt;L+=vL*dt;vR+=(-kR*(Rt-tR)-cR*vR)*dt;Rt+=vR*dt;draw();
+    if(Math.abs(L-tL)+Math.abs(Rt-tR)+Math.abs(vL)+Math.abs(vR)<.3){L=tL;Rt=tR;vL=vR=0;draw();raf=0;return}
+    raf=requestAnimationFrame(step)}
+  function go(a,b,anim){tL=a;tR=b;
+    if(!anim||still()){cancelAnimationFrame(raf);raf=0;L=a;Rt=b;vL=vR=0;draw();return}
+    if(!raf){last=performance.now();raf=requestAnimationFrame(step)}}
+  const ro=new ResizeObserver(()=>api.sync());
+  const api={sync(){
+    const n=document.querySelector('.lqmn');
+    if(!n){host=null;cancelAnimationFrame(raf);raf=0;return}
+    const hs=n.querySelector('.lqm');if(!hs)return;
+    let fresh=false;
+    if(hs!==host){host=hs;hs.innerHTML='<svg aria-hidden="true"><rect x="0" width="100%" height="60"/><path/></svg>';rl=hs.querySelector('rect');pth=hs.querySelector('path');id='';fresh=true;ro.disconnect();ro.observe(n)}
+    const el=n.querySelector('button[aria-current=page]');if(!el||!el.offsetWidth)return;
+    // offsetLeft/offsetWidth: не зависят от transform (scale при нажатии)
+    const a=el.offsetLeft+IN,b=el.offsetLeft+el.offsetWidth-IN;w=b-a;T=el.offsetTop-UP;base=el.offsetTop+el.offsetHeight-4;
+    if(el.dataset.v!==id){const first=fresh||!id;rt=a>=L;id=el.dataset.v;go(a,b,!first)}
+    else if(raf){tL=a;tR=b}else go(a,b,false)}};
+  window.addEventListener('resize',()=>api.sync());
+  return api})();
 function sidebar(){const N=[['home','home','Главная'],['create','plus','Создать комнату'],['rooms','search','Найти комнату'],['rules','book','Правила игры'],['settings','gear','Настройки']];
   return `<aside class="side gl lqs" id="lqside" data-open="${LQ.open}"><div class="lq" data-persist="lq"></div><div class="logo"><span class="dav"><img src="${LOGO}" alt="" width="26" height="26"><i class="dsd"></i></span><span class="fx fxl" style="--i:0">BUNKER</span><button class="lqt" data-a="lqt" aria-label="${LQ.open?'Свернуть меню':'Развернуть меню'}" aria-expanded="${LQ.open}" aria-controls="lqside">${LQ.i('collapse','c')}${LQ.i('expand','x')}</button></div>${N.map(([k,i,l],n)=>`<button class="nav" data-a="${k==='create'?'create':'nav'}" data-v="${k}" aria-label="${l}"${k==='rooms'?` title="${LQ.mod}K"`:''} ${view===k?'aria-current="page"':''}>${ic(i)}<span class="fx fxl" style="--i:${n+1}">${l}</span>${k==='rooms'&&stats.rooms>0?`<span class="bd fx" style="--i:${n+1}">${stats.rooms}</span>`:''}</button>`).join('')}
 <div class="me"><div class="fx mt" style="--i:7"><div class="row">${stat()}</div><small>${stats.online??0} игроков · ${stats.rooms??0} комнат</small></div>
 <button class="nav" data-a="nav" data-v="settings" aria-label="Настройки" style="padding:6px 2px">${av({id:name||'?',name:name||'И',avatar})}<span class="fx fxl" style="--i:8;display:inline-flex;flex-direction:column"><b style="color:var(--tx)">${esc(name||'Игрок')}</b><small>v0.1</small></span></button></div></aside>
-<nav class="mnav" aria-label="Разделы">${N.map(([k,i,l])=>`<button data-a="${k==='create'?'create':'nav'}" data-v="${k}" ${view===k?'aria-current="page"':''}>${ic(i)}${l.split(' ')[0]}</button>`).join('')}</nav>`}
+<nav class="mnav lqmn" aria-label="Разделы"><div class="lqm" data-persist="lqm"></div>${N.map(([k,i,l])=>`<button data-a="${k==='create'?'create':'nav'}" data-v="${k}" ${view===k?'aria-current="page"':''}>${ic(i)}${l.split(' ')[0]}</button>`).join('')}</nav>`}
 const roomRow=r=>`<div class="li"><span class="code">${r.code}</span>${av({id:r.code,name:r.host||'И',avatar:r.hostAvatar},'s')}<div class="grow"><b>${esc(r.host||'Игрок')}</b><br><small>Ведущий</small></div><div class="bar" style="flex:none;width:56px"><i style="width:${r.count/r.max*100}%"></i></div><small>${r.count}/${r.max}</small><button class="btn sm" data-a="join" data-v="${r.code}">Войти</button></div>`;
 const joinForm=()=>`<form class="card" data-f="join"><h3>Войти по коду</h3><label>Код приглашения<input data-b="code" value="${esc(codeVal)}" placeholder="BK-12345" autocomplete="off" aria-invalid="${!!joinErr}"></label>${joinErr?`<div class="err" role="alert">${joinErr}</div>`:''}<button class="btn ${busy==='join'?'ld':''}" ${busy?'disabled':''}>Присоединиться</button></form>`;
 const avatarPicker=()=>`<div class="avp"><div class="avh">${av({id:name||'?',name:name||'И',avatar},'xl')}<div><b>Аватарка</b><small>${avatar?'Нажмите на выбранную, чтобы снять.':'Выберите картинку — её увидят другие игроки.'}</small></div></div><div class="avg" role="listbox" aria-label="Выбор аватарки">${avList.map((id,i)=>`<button type="button" class="avb ${id===avatar?'on':''}" role="option" aria-selected="${id===avatar}" aria-label="Аватарка ${i+1}" data-a="avatar" data-v="${esc(id)}"><img src="${avUrl(id)}" alt="" width="256" height="256" loading="lazy" decoding="async"><span class="avk">${ic('check')}</span></button>`).join('')||`<small>${avState==='load'?'Загрузка аватарок…':avState==='empty'?'Аватарки не найдены на сервере: положите картинки в папку public/avatars и перезапустите сервер.':'Не удалось загрузить список аватарок. Обновите страницу и убедитесь, что задеплоен актуальный server.js.'}</small>`}</div></div>`;
