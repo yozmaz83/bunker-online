@@ -42,6 +42,7 @@ const AVATARS = new Map(); // id -> { file, type }
   if (!AVATARS.size) walk(AV_ROOT, 0);
   console.log(`Avatars found: ${AVATARS.size}`);
 })();
+const ROBOT = (() => { try { return readFileSync(new URL('./icon-discussion-robot.webp', import.meta.url)); } catch { return null; } })(); // анимация фазы «Обсуждение»
 const AV_INDEX = JSON.stringify([...AVATARS.keys()].sort());
 const cleanAvatar = id => { id = String(id || ''); return AVATARS.has(id) ? id : null; };
 
@@ -1149,6 +1150,10 @@ const server = http.createServer((req, res) => {
     const gz = /\bgzip\b/.test(String(req.headers['accept-encoding'] || ''));
     res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'public, max-age=300', vary: 'accept-encoding', ...(gz ? { 'content-encoding': 'gzip' } : {}) });
     return res.end(gz ? b.gz : b.raw);
+  }
+  if (ROBOT && req.url.split('?')[0] === '/icon-discussion-robot.webp') {
+    res.writeHead(200, { 'content-type': 'image/webp', 'cache-control': 'public, max-age=604800' });
+    return res.end(ROBOT);
   }
   if (req.url.startsWith('/avatars/')) {
     const id = decodeURIComponent(req.url.slice(9).split('?')[0]).replace(/\.(jpe?g|png|webp)$/i, '');

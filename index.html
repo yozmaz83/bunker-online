@@ -219,6 +219,16 @@ h1,h2,h3,.logo,.px,.sp-tt b{font-family:var(--h)}
 .lqmn button:active{transform:scale(.94)}
 .lqmn button[aria-current=page]{background:none;color:var(--lqf,#04101C)}
 }
+
+/* ---- робот на фазе обсуждения ---- */
+.dsc{display:grid;grid-template-rows:0fr;margin-top:-12px;opacity:0;pointer-events:none;flex:none;transition:opacity .5s var(--e),grid-template-rows .6s var(--e) .25s,margin-top .6s var(--e) .25s}
+.dsc.on{grid-template-rows:1fr;margin-top:0;opacity:1;transition:grid-template-rows .6s var(--e),margin-top .6s var(--e),opacity .7s var(--e) .2s}
+.gc>.dsc{animation:none}   /* не наследуем появление .gc>* — у робота своё затухание */
+.dsc .in{min-height:0;overflow:hidden;display:flex;justify-content:center}
+.dsc img{height:190px;width:auto;max-width:100%;filter:drop-shadow(0 10px 28px rgba(90,170,255,.28));user-select:none}
+.reduce .dsc{display:none!important}
+@media(prefers-reduced-motion:reduce){.dsc{display:none!important}}
+@media(max-width:900px){.dsc:not(.tg){display:none}.dsc img{height:150px}}
 #lqtip{position:fixed;z-index:30;padding:6px 10px;border-radius:8px;background:rgba(8,10,15,.92);border:1px solid var(--ln);color:var(--tx);font:600 12px var(--f);white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-6px,-50%);transition:opacity .12s var(--e),transform .12s var(--e)}
 #lqtip.on{opacity:1;transform:translate(0,-50%);transition:opacity .18s var(--e) .15s,transform .18s var(--e) .15s}
 </style></head>
@@ -433,7 +443,7 @@ function render(){
   document.documentElement.classList.toggle('reduce',calm);
   const t=document.createElement('div');
   t.innerHTML=(!S?menu():(S.phase==='LOBBY'||S.phase==='STARTING')?lobby():S.phase==='FINISHED'?final():game())+(modal?mdl():'');
-  trTree(t);morph(app,t);LQ.sync();LQM.sync();$('#offl').innerHTML=conn?'':tr('<div class="off gl" role="alert">Связь потеряна. Переподключаемся…</div>');
+  trTree(t);morph(app,t);LQ.sync();LQM.sync();DSC.sync();$('#offl').innerHTML=conn?'':tr('<div class="off gl" role="alert">Связь потеряна. Переподключаемся…</div>');
   app.querySelectorAll('.log').forEach((l,i)=>{if(logs[i]!==false)l.scrollTop=l.scrollHeight});
   if(S){S.players.forEach(p=>Object.keys(p.revealed).forEach(k=>seenR.add(p.id+k)));seenOn=true}else seenOn=false;
   const sk=S?S.phase:view;if(sk!==render.sk){render.sk=sk;window.__wave&&window.__wave.boost()}
@@ -558,6 +568,17 @@ const LQM=(()=>{
     else if(raf){tL=a;tR=b}else go(a,b,false)}};
   window.addEventListener('resize',()=>api.sync());
   return api})();
+/* ---- DSC: зацикленная анимация робота на фазе «Обсуждение» ----
+   Узел .dsc помечен data-persist, поэтому morph() его не пересоздаёт: класс .on переключается из JS,
+   а появление/уход (затухание + плавное раскрытие высоты) делает CSS. Файл — WebP с прозрачностью, loop=∞. */
+const DSC=(()=>({sync(){
+  const el=document.querySelector('.dsc');if(!el)return;
+  if(!el.firstChild)el.innerHTML='<div class="in"><img alt="" draggable="false" decoding="async"></div>';
+  const im=el.querySelector('img'),live=typeof S!=='undefined'&&!!S;
+  if(live&&!im.getAttribute('src')){im.onerror=()=>{el.style.display='none'};im.src='/icon-discussion-robot.webp'}   // грузим заранее, с началом игры
+  el.classList.toggle('on',live&&S.phase==='DISCUSS');
+  el.classList.toggle('tg',typeof tab!=='undefined'&&tab==='game');            // на телефоне — только на вкладке «Фаза»
+}}))();
 function sidebar(){const N=[['home','home','Главная'],['create','plus','Создать комнату'],['rooms','search','Найти комнату'],['rules','book','Правила игры'],['settings','gear','Настройки']];
   return `<aside class="side gl lqs" id="lqside" data-open="${LQ.open}"><div class="lq" data-persist="lq"></div><div class="logo"><span class="dav"><img src="${LOGO}" alt="" width="26" height="26"><i class="dsd"></i></span><span class="fx fxl" style="--i:0">BUNKER</span><button class="lqt" data-a="lqt" aria-label="${LQ.open?'Свернуть меню':'Развернуть меню'}" aria-expanded="${LQ.open}" aria-controls="lqside">${LQ.i('collapse','c')}${LQ.i('expand','x')}</button></div>${N.map(([k,i,l],n)=>`<button class="nav" data-a="${k==='create'?'create':'nav'}" data-v="${k}" aria-label="${l}"${k==='rooms'?` title="${LQ.mod}K"`:''} ${view===k?'aria-current="page"':''}>${ic(i)}<span class="fx fxl" style="--i:${n+1}">${l}</span>${k==='rooms'&&stats.rooms>0?`<span class="bd fx" style="--i:${n+1}">${stats.rooms}</span>`:''}</button>`).join('')}
 <div class="me"><div class="fx mt" style="--i:7"><div class="row">${stat()}</div><small>${stats.online??0} игроков · ${stats.rooms??0} комнат</small></div>
@@ -622,7 +643,7 @@ function actions(){const ph=S.phase,me=S.me;
   return `<span class="t2">${!me.alive?'Вы наблюдаете за игрой.':PH[ph]||''}</span>`}
 function game(){const A=S.players.filter(p=>p.alive).length,T=[['game','Фаза'],['players','Игроки'],['dos','Досье'],['chat','Чат']],sh=k=>tab===k?'show':'';
   return `<div class="gm" data-scr="game"><header class="top gl"><span class="code">${S.code}</span><span class="px np" style="font-size:15px" data-scr="${S.round}">Раунд ${S.round}</span><b class="tm px">${tm()}</b><div class="stat"><small>Осталось / мест</small><b class="np" data-scr="${A}/${S.seats}">${A} / ${S.seats}</b></div><span class="bd wa" data-scr="${S.phase}">${PH[S.phase]||S.phase}</span><span class="grow"></span>${stat()}<button class="ib dg" data-a="leave" aria-label="Выйти из игры" title="Выйти">${ic('exit')}</button></header>
-<div class="gb"><div class="gc"><section class="gl pnl sec ${sh('game')}" data-scr="${S.phase}">${phasePanel()}</section><section class="sec ${sh('players')}"><div class="gcs">${S.players.map(gcard).join('')}</div></section></div>
+<div class="gb"><div class="gc"><section class="gl pnl sec ${sh('game')}" data-scr="${S.phase}">${phasePanel()}</section><div class="dsc" data-persist="dsc" aria-hidden="true"></div><section class="sec ${sh('players')}"><div class="gcs">${S.players.map(gcard).join('')}</div></section></div>
 <div class="gs"><section class="gl pnl sec ${sh('dos')}">${dossier()}</section><section class="gl pnl sec chat ${sh('chat')}"><h3>Чат и события</h3>${chatBox()}</section></div></div>
 <div class="ga gl">${actions()}</div>
 <nav class="mnav" aria-label="Игровые разделы">${T.map(([k,l])=>`<button data-a="tab" data-v="${k}" ${tab===k?'aria-current="page"':''}>${l}</button>`).join('')}</nav></div>`}
